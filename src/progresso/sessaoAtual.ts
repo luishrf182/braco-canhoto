@@ -23,6 +23,8 @@ export interface SessaoAtual {
   indice: number;
   resultados: ResultadoItem[];
   concluida: boolean;
+  /** Diagnóstico: só as lacunas (Quase/Travou) viram itens de revisão. */
+  tipo?: 'diagnostico';
 }
 
 export function lerSessao(): SessaoAtual | null {

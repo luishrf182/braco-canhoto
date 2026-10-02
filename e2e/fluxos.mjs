@@ -367,6 +367,67 @@ teste('F9: trilha do Módulo 3 de ponta a ponta', async (nav) => {
   afirmar(p.erros.length === 0, p.erros.join(' | '));
 });
 
+// ---------------------------------------------------------------- F10
+teste('F10: primeiro acesso: calibração → diagnóstico → lacunas na caixa 1', async (nav) => {
+  const ctx = await nav.newContext({ viewport: { width: 390, height: 844 } });
+  const p = await ctx.newPage();
+  globalThis.ultimaPagina = p;
+  p.erros = [];
+  p.on('pageerror', (e) => p.erros.push(String(e)));
+  await p.goto(BASE);
+  await p.waitForSelector('text=É assim que você vê sua guitarra?');
+  await p.getByRole('button', { name: /Inverter lados/ }).click();
+  await p.getByRole('button', { name: 'Sim, é assim' }).click();
+  await p.waitForSelector('text=Diagnóstico (opcional)');
+  await p.getByRole('button', { name: 'Começar diagnóstico' }).click();
+  // Avalia alternando Limpo e Travou; quizzes em pense-e-revele não existem aqui, então responde o quiz.
+  for (let passo = 0; passo < 200; passo++) {
+    if (p.url().includes('/resultado')) break;
+    if (await p.getByRole('group', { name: 'Escolha a nota' }).count()) {
+      await p
+        .getByRole('group', { name: 'Escolha a nota' })
+        .getByRole('button')
+        .first()
+        .click({ timeout: 800 })
+        .catch(() => {});
+      await p.waitForTimeout(1500);
+      continue;
+    }
+    if (await p.getByRole('group', { name: 'Como foi?' }).count()) {
+      await p.keyboard.press(passo % 2 ? '3' : '1');
+      await p.waitForTimeout(150);
+      continue;
+    }
+    await p.waitForTimeout(200);
+  }
+  await p.waitForSelector('h1:has-text("Sessão concluída")');
+  const prog = await lerProgresso(p);
+  afirmar(
+    prog.ajustes.calibrado && prog.ajustes.diagnosticoVisto,
+    'calibração/diagnóstico não registrados',
+  );
+  afirmar(prog.ajustes.espelhoHorizontal === false, 'orientação escolhida não persistiu');
+  const itens = Object.entries(prog.itens);
+  afirmar(itens.length > 0, 'nenhuma lacuna registrada');
+  afirmar(
+    itens.every(([k, i]) => k.startsWith('diag-') && i.caixa === 1),
+    'lacunas fora da caixa 1',
+  );
+  afirmar(
+    itens.every(([, i]) => i.ultimaAvaliacao !== 'limpo'),
+    'item Limpo virou revisão',
+  );
+  // A orientação vale em todas as telas e sobrevive a recarregar.
+  await p.goto(BASE + '#/explorar');
+  await p.reload();
+  const prog2 = await lerProgresso(p);
+  afirmar(prog2.ajustes.espelhoHorizontal === false, 'orientação perdida após recarregar');
+  // As lacunas voltam como revisão na próxima Sessão do dia.
+  await p.goto(BASE + '#/hoje');
+  await p.waitForSelector('span[data-motivo="revisao"]');
+  afirmar(p.erros.length === 0, p.erros.join(' | '));
+});
+
 // ----------------------------------------------------------------
 try {
   for (let i = 0; i < 60; i++) {

@@ -3,6 +3,7 @@ import type { ModuloId } from '../tipos';
 import { ARPEJOS } from './modulos/arpejos';
 import { CAMPO_MAIOR } from './modulos/campo-maior';
 import { TETRADES } from './modulos/tetrades';
+import { DIAGNOSTICO } from './diagnostico';
 import type { Licao, Modulo } from './tipos';
 import { AQUECIMENTOS_TECNICOS } from './treinos/aquecimentos';
 import { MAPA_DO_BRACO } from './treinos/mapa';
@@ -38,7 +39,11 @@ export const AQUECIMENTOS: ModeloExercicio[] = [
 ];
 
 export function todosModelos(): ModeloExercicio[] {
-  return [...MODULOS.flatMap((m) => m.modelos), ...TREINOS.flatMap((t) => t.modelos)];
+  return [
+    ...MODULOS.flatMap((m) => m.modelos),
+    ...TREINOS.flatMap((t) => t.modelos),
+    ...DIAGNOSTICO,
+  ];
 }
 
 export function buscarModelo(id: string): ModeloExercicio | undefined {

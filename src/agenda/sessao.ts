@@ -33,6 +33,8 @@ export type ItemSessao =
 export interface EntradaSessao {
   modulos: ModuloAgenda[];
   aquecimentos: ModeloAgenda[];
+  /** Outros modelos cujos itens podem voltar como revisão (ex.: lacunas do diagnóstico). */
+  extras?: ModeloAgenda[];
   itens: Record<string, ItemProgresso>;
   /** Lições já vistas: `${modulo}/${licao}` → data. */
   licoesVistas: Record<string, string>;
@@ -157,9 +159,13 @@ export function montarSessao(e: EntradaSessao): ItemSessao[] {
   const conhecidos = new Set([
     ...e.modulos.flatMap((m) => m.modelos.map((x) => x.id)),
     ...e.aquecimentos.map((x) => x.id),
+    ...(e.extras ?? []).map((x) => x.id),
   ]);
   const porId = new Map(
-    [...e.modulos.flatMap((m) => m.modelos), ...e.aquecimentos].map((m) => [m.id, m]),
+    [...e.modulos.flatMap((m) => m.modelos), ...e.aquecimentos, ...(e.extras ?? [])].map((m) => [
+      m.id,
+      m,
+    ]),
   );
 
   // Aquecimento

@@ -18,8 +18,8 @@
   --on-role: #ffffff;
   /* Braço */
   --fret: #cfcfc9;
-  --nut: #9a9a94;
-  --string: #9a9a94;
+  --nut: #85857f; /* blueprint: #9A9A94 — escurecido para 3:1 sobre o fundo */
+  --string: #85857f;
   --inlay: #e4e4e0;
   /* Estados */
   --ok: #007a55;

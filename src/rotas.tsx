@@ -6,6 +6,7 @@ import { Hoje } from './telas/Hoje';
 import { Ajustes } from './telas/Ajustes';
 import { Calibracao } from './telas/Calibracao';
 import { Explorar } from './telas/Explorar';
+import { Diagnostico } from './telas/Diagnostico';
 import { Exercicio } from './telas/Exercicio';
 import { Licao } from './telas/Licao';
 import { Resultado } from './telas/Resultado';
@@ -31,6 +32,9 @@ export function Rotas() {
         </Route>
         <Route path="/licao/:modulo/:licao">
           <Licao />
+        </Route>
+        <Route path="/diagnostico">
+          <Diagnostico />
         </Route>
         <Route path="/sessao">
           <Sessao />

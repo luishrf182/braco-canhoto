@@ -26,8 +26,8 @@ function formaDo(ctx: ContextoGeracao): FormaCaged {
   return ctx.forma ?? 'A';
 }
 
-function descricaoForma(forma: FormaCaged): string {
-  const ab = aberturaPadrao(forma);
+function descricaoForma(forma: FormaCaged, q: Qualidade): string {
+  const ab = QUALIDADES_TETRADE.includes(q) ? aberturaPadrao(forma) : undefined;
   return `forma de ${forma}${ab ? ` · abertura ${ab}` : ''}`;
 }
 
@@ -48,7 +48,7 @@ export function verTetrade(modelo: ModeloExercicio, ctx: ContextoGeracao): Exerc
     titulo: modelo.titulo,
     tom: ctx.tom,
     forma,
-    instrucao: `${nome} · ${descricaoForma(forma)}${omitir?.length ? ` · sem ${omitir.map((f) => NOME_FUNCAO[f]).join(' e ')}` : ''}`,
+    instrucao: `${nome} · ${descricaoForma(forma, q)}${omitir?.length ? ` · sem ${omitir.map((f) => NOME_FUNCAO[f]).join(' e ')}` : ''}`,
     marcadores,
     faixa: janelaDoVoicing(v),
     eventos: [

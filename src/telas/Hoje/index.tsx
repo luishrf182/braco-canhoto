@@ -115,6 +115,12 @@ export function Hoje() {
         </section>
       )}
 
+      {!ajustes.diagnosticoVisto && (
+        <p>
+          <Link href="/diagnostico">Fazer o diagnóstico de entrada (10 min, opcional)</Link>
+        </p>
+      )}
+
       <p className="mudo">
         Prefere escolher? Vá à <Link href="/trilha">Trilha</Link> ou ao{' '}
         <Link href="/explorar">Explorar</Link>.

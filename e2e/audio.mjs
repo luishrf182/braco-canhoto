@@ -47,8 +47,7 @@ try {
     falhar('Tone.js carregou antes do primeiro "Tocar"');
   else console.log(`✅ abertura sem Tone.js (${antes} script(s))`);
 
-  // Desliga a contagem para medir direto.
-  await p.getByRole('button', { name: 'Contar' }).click();
+  // Explorar começa em C7M (acorde + nota a nota); mede o destaque andando.
   await p.getByRole('button', { name: 'Tocar' }).click();
   await p.waitForFunction(() => document.querySelector('[aria-label="Parar"]'), null, {
     timeout: 10000,
@@ -75,7 +74,8 @@ try {
   await p.waitForTimeout(300);
   const estado = await p.evaluate(() => (window.__estadoAudio ??= null));
   void estado;
-  await p.getByRole('button', { name: 'Parar' }).click();
+  const parar = p.getByRole('button', { name: 'Parar' });
+  if (await parar.count()) await parar.click();
 
   // Base sintetizada (F7): cadência com bateria, pad e baixo; o acorde atual avança.
   await p.goto(BASE + '#/exercicio/cadencia-1');

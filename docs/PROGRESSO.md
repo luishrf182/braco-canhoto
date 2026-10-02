@@ -19,7 +19,7 @@ Repositório: https://github.com/luishrf182/braco-canhoto
 | F7 — Base + Módulo 2: Campo harmônico | concluída |
 | F8 — Aquecimentos | concluída |
 | F9 — Módulo 3: Arpejos | concluída |
-| F10 — Diagnóstico + acabamento + entrega | pendente |
+| F10 — Diagnóstico + acabamento + entrega | concluída |
 
 ---
 
@@ -219,3 +219,19 @@ Repositório: https://github.com/luishrf182/braco-canhoto
 
 **Pendências**
 - Nenhuma.
+
+## F10 — Diagnóstico + acabamento + entrega
+
+**Feito**
+- Diagnóstico de entrada (opcional, ~10 min), depois da calibração: tríades maior/menor nas formas E e A, pentatônica nas 5 formas e quiz de notas. Só as lacunas (Quase/Travou) viram itens na caixa 1 e voltam na Sessão do dia. Há link em Hoje enquanto o diagnóstico não foi feito.
+- Explorar completo (§2.1): Acorde (estado inicial C7M), Arpejo, Escala e Notas, com tom, qualidade e forma, tocando o que está na tela.
+- Acessibilidade: `scripts/contraste.mjs` (no `npm run qa`) confere AA e 3:1 nos dois temas; cordas e pestana do tema claro escurecidas. Marcadores clicáveis acessíveis por teclado.
+- Performance: JS inicial 91,6 KB gzip; Lighthouse mobile local 100/100/100 (desempenho, acessibilidade, boas práticas).
+- Auditoria final: 13 telas × 5 resoluções (+ escuro em 2), todas ok; 11 fluxos ponta a ponta e o teste de áudio verdes.
+- `docs/ENTREGA.md`: roteiro de teste, os 17 textos de lição, decisões autônomas, limites conhecidos e a Definition of Done.
+
+**Decisões autônomas**
+- O diagnóstico usa o tom de Lá (comum para pentatônica) e a mesma tela de sessão.
+
+**Pendências (para o Luís)**
+- Os itens não automatizáveis da DoD (escuta no celular, TV a 2 m, token real) estão no roteiro de `ENTREGA.md`.

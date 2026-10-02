@@ -77,7 +77,7 @@ export function Resultado() {
               <span className={css.titulo}>{r.titulo}</span>
               <span className="rotulo num">
                 {r.bpm !== undefined ? `${r.bpm} BPM · ` : ''}
-                {textoRevisao(r.proximaRevisao, hoje)}
+                {r.proximaRevisao ? textoRevisao(r.proximaRevisao, hoje) : 'sem lacuna'}
               </span>
             </li>
           ))}

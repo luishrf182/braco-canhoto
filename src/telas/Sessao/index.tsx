@@ -102,7 +102,12 @@ export function Sessao() {
       aoSair={sair}
       aoAvaliar={(avaliacao: Avaliacao, bpm: number) => {
         const usaBpm = exercicio.formato !== 'quiz-braco' && exercicio.formato !== 'identificacao';
-        const novo = registrarAvaliacao(exercicio.chave, avaliacao, usaBpm ? bpm : undefined);
+        // No diagnóstico, só as lacunas viram itens de revisão (caixa 1).
+        const lacuna = avaliacao !== 'limpo';
+        const novo =
+          sessao.tipo === 'diagnostico' && !lacuna
+            ? { caixa: 3 as const, proximaRevisao: '' }
+            : registrarAvaliacao(exercicio.chave, avaliacao, usaBpm ? bpm : undefined);
         const s: SessaoAtual = {
           ...sessao,
           resultados: [
@@ -130,6 +135,7 @@ export function iniciarSessao(
   itens: SessaoAtual['itens'],
   minutos: number,
   agora = new Date(),
+  tipo?: SessaoAtual['tipo'],
 ): SessaoAtual {
   const s: SessaoAtual = {
     id: `${hojeISO(agora)}-${agora.getTime().toString(36)}`,
@@ -139,6 +145,7 @@ export function iniciarSessao(
     indice: 0,
     resultados: [],
     concluida: false,
+    ...(tipo ? { tipo } : {}),
   };
   gravarSessao(s);
   return s;

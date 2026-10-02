@@ -2,6 +2,7 @@ import { statusCheckpoint } from '../agenda/checkpoint';
 import { hojeISO } from '../agenda/caixas';
 import { montarSessao, type ItemSessao } from '../agenda/sessao';
 import { AQUECIMENTOS, MODULOS, buscarLicao, buscarModelo } from '../conteudo';
+import { DIAGNOSTICO } from '../conteudo/diagnostico';
 import { criarAleatorio } from '../exercicios/aleatorio';
 import { formatarNota } from '../teoria/notas';
 import type { Progresso } from '../tipos';
@@ -26,6 +27,7 @@ export function planejarSessao(p: Progresso, agora = new Date(), n = 0): ItemSes
       checkpointCompleto: statusCheckpoint(m.checkpoint, p.itens).completo,
     })),
     aquecimentos: AQUECIMENTOS,
+    extras: DIAGNOSTICO,
     itens: p.itens,
     licoesVistas: p.licoesVistas ?? {},
     hoje,
