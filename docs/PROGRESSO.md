@@ -17,7 +17,7 @@ Repositório: https://github.com/luishrf182/braco-canhoto
 | F5 — Agenda + Sessão do dia | concluída |
 | F6 — Sincronização via Gist | concluída |
 | F7 — Base + Módulo 2: Campo harmônico | concluída |
-| F8 — Aquecimentos | pendente |
+| F8 — Aquecimentos | concluída |
 | F9 — Módulo 3: Arpejos | pendente |
 | F10 — Diagnóstico + acabamento + entrega | pendente |
 
@@ -185,3 +185,20 @@ Repositório: https://github.com/luishrf182/braco-canhoto
 
 **Pendências**
 - A sincronia da bateria e o timbre precisam de escuta no celular (vai para o roteiro de `ENTREGA.md`).
+
+## F8 — Aquecimentos
+
+**Feito**
+- `teoria/escalas.ts`: `posicaoEscala(tom, escala, forma)`. Pentatônicas com 2 notas por corda: a 6ª corda começa no grau da forma (penta menor E=box 1, D=2, C=3, A=4, G=5), e a penta maior usa a forma da relativa. Escala maior numa janela de 5 casas em torno do acorde da forma. Testes: os 5 boxes de Lá menor, a forma de D da escala maior, as relativas e propriedades em 12 tons × 5 formas × 3 escalas.
+- `exercicios/aquecimentos.ts`: independência (pares de dedos corda a corda), horizontal (grupos de 4 subindo e descendo), duas cordas (grupos de 3), vertical (célula de 4 descendo as cordas), ligados (hammer-on e pull-off), 3 ritmos (colcheias, tercinas, semicolcheias) e dedilhado de um dedo por casa. Teste: todo evento cai na forma e no tom pedidos (12 tons × 5 formas × todos os tipos).
+- Formato `ouca-repita`: contagem → o app toca → "Sua vez" com metrônomo; diagrama ocultável.
+- Treino "Aquecimentos" na Trilha (6 exercícios); a Sessão do dia agora aquece com eles (tom e forma sorteados) e com quizzes do Mapa do braço.
+- `revisor-teoria`: reprovou a primeira versão (pentatônica deslocada nas formas C, D e G). O algoritmo foi trocado e a nova versão foi aprovada.
+
+**Decisões autônomas**
+- O deslize para a forma vizinha no aquecimento "horizontal" não entrou: todos os padrões ficam dentro de uma forma. A conexão entre formas vem no Módulo 3 (F9).
+- Independência usa as notas da escala, não um padrão cromático, para cumprir o critério "todo evento dentro do tom".
+- Box 3 (casas 9–13): o dedo 4 cobre as casas 12 e 13 (alongamento).
+
+**Pendências**
+- Nenhuma.

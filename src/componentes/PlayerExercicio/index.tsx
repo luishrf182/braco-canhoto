@@ -9,6 +9,7 @@ import { Avaliacao } from '../Avaliacao';
 import { BarraReproducao } from '../BarraReproducao';
 import { Braco } from '../Braco';
 import { Cartas } from './Cartas';
+import { OucaRepita } from './OucaRepita';
 import { Progressao } from './Progressao';
 import { QuizBraco, type ResultadoQuiz } from './QuizBraco';
 import css from './PlayerExercicio.module.css';
@@ -80,6 +81,8 @@ export function PlayerExercicio({
           aoTerminar={setResultadoQuiz}
           aoMudarInstrucao={setInstrucaoQuiz}
         />
+      ) : exercicio.formato === 'ouca-repita' ? (
+        <OucaRepita exercicio={exercicio} bpm={bpm} setBpm={setBpm} />
       ) : exercicio.formato === 'progressao' && exercicio.progressao ? (
         <Progressao exercicio={exercicio} bpm={bpm} setBpm={setBpm} />
       ) : ehQuiz && exercicio.quiz ? (

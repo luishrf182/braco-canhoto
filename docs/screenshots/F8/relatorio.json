@@ -1,0 +1,233 @@
+[
+  {
+    "tela": "aquec",
+    "resolucao": "360x640",
+    "tema": "claro",
+    "ok": true,
+    "rolagemH": false,
+    "rolagemV": false,
+    "pequenos": [],
+    "erros": []
+  },
+  {
+    "tela": "aquec",
+    "resolucao": "390x844",
+    "tema": "claro",
+    "ok": true,
+    "rolagemH": false,
+    "rolagemV": false,
+    "pequenos": [],
+    "erros": []
+  },
+  {
+    "tela": "aquec",
+    "resolucao": "390x844",
+    "tema": "escuro",
+    "ok": true,
+    "rolagemH": false,
+    "rolagemV": false,
+    "pequenos": [],
+    "erros": []
+  },
+  {
+    "tela": "aquec",
+    "resolucao": "844x390",
+    "tema": "claro",
+    "ok": true,
+    "rolagemH": false,
+    "rolagemV": false,
+    "pequenos": [],
+    "erros": []
+  },
+  {
+    "tela": "aquec",
+    "resolucao": "768x1024",
+    "tema": "claro",
+    "ok": true,
+    "rolagemH": false,
+    "rolagemV": false,
+    "pequenos": [],
+    "erros": []
+  },
+  {
+    "tela": "aquec",
+    "resolucao": "1280x720",
+    "tema": "claro",
+    "ok": true,
+    "rolagemH": false,
+    "rolagemV": false,
+    "pequenos": [],
+    "erros": []
+  },
+  {
+    "tela": "aquec",
+    "resolucao": "1280x720",
+    "tema": "escuro",
+    "ok": true,
+    "rolagemH": false,
+    "rolagemV": false,
+    "pequenos": [],
+    "erros": []
+  },
+  {
+    "tela": "aquec-ligados",
+    "resolucao": "360x640",
+    "tema": "claro",
+    "ok": true,
+    "rolagemH": false,
+    "rolagemV": false,
+    "pequenos": [],
+    "erros": []
+  },
+  {
+    "tela": "aquec-ligados",
+    "resolucao": "390x844",
+    "tema": "claro",
+    "ok": true,
+    "rolagemH": false,
+    "rolagemV": false,
+    "pequenos": [],
+    "erros": []
+  },
+  {
+    "tela": "aquec-ligados",
+    "resolucao": "390x844",
+    "tema": "escuro",
+    "ok": true,
+    "rolagemH": false,
+    "rolagemV": false,
+    "pequenos": [],
+    "erros": []
+  },
+  {
+    "tela": "aquec-ligados",
+    "resolucao": "844x390",
+    "tema": "claro",
+    "ok": true,
+    "rolagemH": false,
+    "rolagemV": false,
+    "pequenos": [],
+    "erros": []
+  },
+  {
+    "tela": "aquec-ligados",
+    "resolucao": "768x1024",
+    "tema": "claro",
+    "ok": true,
+    "rolagemH": false,
+    "rolagemV": false,
+    "pequenos": [],
+    "erros": []
+  },
+  {
+    "tela": "aquec-ligados",
+    "resolucao": "1280x720",
+    "tema": "claro",
+    "ok": true,
+    "rolagemH": false,
+    "rolagemV": false,
+    "pequenos": [],
+    "erros": []
+  },
+  {
+    "tela": "aquec-ligados",
+    "resolucao": "1280x720",
+    "tema": "escuro",
+    "ok": true,
+    "rolagemH": false,
+    "rolagemV": false,
+    "pequenos": [],
+    "erros": []
+  },
+  {
+    "tela": "hoje",
+    "resolucao": "360x640",
+    "tema": "claro",
+    "ok": true,
+    "rolagemH": false,
+    "rolagemV": true,
+    "pequenos": [
+      "Trilha",
+      "Explorar"
+    ],
+    "erros": []
+  },
+  {
+    "tela": "hoje",
+    "resolucao": "390x844",
+    "tema": "claro",
+    "ok": true,
+    "rolagemH": false,
+    "rolagemV": true,
+    "pequenos": [
+      "Trilha",
+      "Explorar"
+    ],
+    "erros": []
+  },
+  {
+    "tela": "hoje",
+    "resolucao": "390x844",
+    "tema": "escuro",
+    "ok": true,
+    "rolagemH": false,
+    "rolagemV": true,
+    "pequenos": [
+      "Trilha",
+      "Explorar"
+    ],
+    "erros": []
+  },
+  {
+    "tela": "hoje",
+    "resolucao": "844x390",
+    "tema": "claro",
+    "ok": true,
+    "rolagemH": false,
+    "rolagemV": true,
+    "pequenos": [
+      "Trilha",
+      "Explorar"
+    ],
+    "erros": []
+  },
+  {
+    "tela": "hoje",
+    "resolucao": "768x1024",
+    "tema": "claro",
+    "ok": true,
+    "rolagemH": false,
+    "rolagemV": false,
+    "pequenos": [
+      "Trilha",
+      "Explorar"
+    ],
+    "erros": []
+  },
+  {
+    "tela": "hoje",
+    "resolucao": "1280x720",
+    "tema": "claro",
+    "ok": true,
+    "rolagemH": false,
+    "rolagemV": true,
+    "pequenos": [
+      "Trilha",
+      "Explorar"
+    ],
+    "erros": []
+  },
+  {
+    "tela": "hoje",
+    "resolucao": "1280x720",
+    "tema": "escuro",
+    "ok": true,
+    "rolagemH": false,
+    "rolagemV": true,
+    "pequenos": [
+      "Trilha",
+      "Explorar"
+    ],
+    "erros": []
+  }
+]

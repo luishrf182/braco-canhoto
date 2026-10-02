@@ -1,4 +1,5 @@
 import { criarAleatorio } from './aleatorio';
+import { aquecimento } from './aquecimentos';
 import { oitavas, quizNomePonto, quizTocarNota, todasAsNotas } from './mapa';
 import { identificarTetrade, ondeEstaGrau, verTetrade } from './tetrades';
 import {
@@ -26,6 +27,7 @@ const GERADORES: Record<string, Gerador> = {
   tocarCampo,
   identificarGrauCampo,
   relativas,
+  aquecimento,
 };
 
 /** Outros módulos de exercícios registram seus geradores aqui. */
