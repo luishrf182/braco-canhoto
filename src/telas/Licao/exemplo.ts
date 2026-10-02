@@ -1,6 +1,7 @@
 import type { ExemploConceito } from '../../conteudo/tipos';
 import { passoDe } from '../../exercicios/campo';
 import type { EventoSequencia, PassoProgressao } from '../../exercicios/tipos';
+import { arpejo } from '../../teoria/arpejos';
 import { cadencia, campoHarmonico } from '../../teoria/campo';
 import { acorde, papelDaFuncao } from '../../teoria/acordes';
 import { cifra } from '../../teoria/cifra';
@@ -63,5 +64,48 @@ export function exemploMusical(ex: ExemploConceito): DadosExemplo {
       passos,
     };
   }
-  throw new Error(`Exemplo ainda não suportado: ${ex.tipo}`);
+  if (ex.tipo === 'arpejo' || ex.tipo === 'conexao') {
+    const formas = ex.tipo === 'arpejo' ? [ex.forma] : ex.formas;
+    const arps = formas
+      .map((f) => arpejo(ex.tom, ex.qualidade, f))
+      .sort((a, b) => a.janela[0] - b.janela[0]);
+    const marcadores: Marcador[] = [];
+    const pos = new Map<string, number>();
+    for (const a of arps)
+      for (const m of a.marcadores) {
+        const k = `${m.corda}:${m.casa}`;
+        if (!pos.has(k)) {
+          pos.set(k, marcadores.length);
+          marcadores.push(m);
+        }
+      }
+    const eventos: EventoSequencia[] = arps.flatMap((a, k) =>
+      (k % 2 === 0 ? a.marcadores : [...a.marcadores].reverse()).map((m) => ({
+        midi: m.midi!,
+        indice: pos.get(`${m.corda}:${m.casa}`)!,
+        duracao: 1 / 2,
+      })),
+    );
+    const nome = cifra(acorde(ex.tom, ex.qualidade));
+    const um = arps[0]!;
+    return {
+      titulo:
+        ex.tipo === 'arpejo'
+          ? `Arpejo de ${nome} · forma de ${ex.forma}`
+          : `${nome} nas formas ${arps.map((a) => a.forma).join(' → ')}`,
+      chips: [],
+      marcadores,
+      ...(ex.tipo === 'arpejo'
+        ? {
+            faixa: (um.janela[0] === 0 ? [0, 5] : [um.janela[0] - 1, um.janela[1] + 1]) as [
+              number,
+              number,
+            ],
+            sombra: um.janela,
+          }
+        : {}),
+      eventos,
+    };
+  }
+  throw new Error(`Exemplo ainda não suportado: ${JSON.stringify(ex)}`);
 }

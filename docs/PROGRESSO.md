@@ -18,7 +18,7 @@ Repositório: https://github.com/luishrf182/braco-canhoto
 | F6 — Sincronização via Gist | concluída |
 | F7 — Base + Módulo 2: Campo harmônico | concluída |
 | F8 — Aquecimentos | concluída |
-| F9 — Módulo 3: Arpejos | pendente |
+| F9 — Módulo 3: Arpejos | concluída |
 | F10 — Diagnóstico + acabamento + entrega | pendente |
 
 ---
@@ -199,6 +199,23 @@ Repositório: https://github.com/luishrf182/braco-canhoto
 - O deslize para a forma vizinha no aquecimento "horizontal" não entrou: todos os padrões ficam dentro de uma forma. A conexão entre formas vem no Módulo 3 (F9).
 - Independência usa as notas da escala, não um padrão cromático, para cumprir o critério "todo evento dentro do tom".
 - Box 3 (casas 9–13): o dedo 4 cobre as casas 12 e 13 (alongamento).
+
+**Pendências**
+- Nenhuma.
+
+## F9 — Módulo 3: Arpejos
+
+**Feito**
+- `teoria/arpejos.ts`: arpejo das 5 qualidades em cada forma CAGED (todas as notas do acorde numa janela de 5 casas em torno do acorde da forma), `formasEmOrdem` (ciclo C-A-G-E-D subindo o braço) e `arpejoNaRegiao`. Teste: notas pertencem ao acorde e ficam na janela (12 tons × 5 qualidades × 5 formas).
+- Geradores: ver arpejo (sobe e desce em colcheias), ligar as 5 formas (sobe numa, desce na seguinte), campo em arpejos numa região (I7M → VIIm7(b5), 8 notas cada), quiz "toque a 3ª".
+- Módulo 3: 2 lições (arpejo; ligar formas), 8 exercícios. Checkpoint: 7M, m7 e 7 nas 5 formas com Limpo em 3 tons.
+- Lições mostram arpejo numa forma e a conexão das 5 formas.
+- `e2e/fluxos.mjs`: trilha do Módulo 3 de ponta a ponta.
+- `revisor-teoria`: teoria aprovada; 2 frases das lições corrigidas (conexão entre formas: "casas" em comum, não alturas; o arpejo vai da nota mais grave à mais aguda da forma, não necessariamente da tônica).
+
+**Decisões autônomas**
+- Checkpoint "em Dó + 2 tons" implementado como "3 tons distintos com Limpo". Como todo conteúdo novo começa em Dó, na prática o primeiro tom é sempre Dó.
+- Em Cm7 a forma de C mais grave fica nas casas 11–15, então a ordem das formas começa na de A. O ciclo continua correto.
 
 **Pendências**
 - Nenhuma.

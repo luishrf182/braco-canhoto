@@ -338,6 +338,35 @@ teste('F6: token que expira depois vira "Salvo só neste aparelho"', async (nav)
   await p.waitForSelector('text=Token inválido ou expirado');
 });
 
+// ---------------------------------------------------------------- F9
+teste('F9: trilha do Módulo 3 de ponta a ponta', async (nav) => {
+  const p = await novaPagina(nav, {}, { width: 844, height: 390 });
+  await p.goto(BASE + '#/trilha');
+  await p.getByRole('link', { name: /Acorde nota por nota/ }).click();
+  await p.waitForSelector('text=Arpejo é o acorde tocado nota por nota');
+  await p.getByRole('button', { name: 'Próxima' }).click();
+  await p.getByRole('button', { name: 'Concluir' }).click();
+  await p.getByRole('link', { name: /Ligar as formas/ }).click();
+  await p.waitForSelector('text=nas formas');
+  await p.getByRole('button', { name: 'Concluir' }).click();
+  await p.getByRole('link', { name: 'Arpejo m7, forma de G' }).click();
+  await p.waitForSelector('text=Arpejo de Cm7 · forma de G');
+  await p.keyboard.press('1');
+  await p.waitForSelector('text=Salvo.');
+  await p.getByRole('button', { name: 'Sair do exercício' }).click();
+  await p.getByRole('link', { name: 'Ligar as 5 formas' }).click();
+  await p.waitForSelector('text=C7M nas 5 formas');
+  await p.keyboard.press('2');
+  await p.waitForSelector('text=Salvo.');
+  const prog = await lerProgresso(p);
+  afirmar(prog.itens['arpejo-m7|C|G'], 'arpejo não gravado');
+  afirmar(
+    prog.licoesVistas['arpejos/arpejo'] && prog.licoesVistas['arpejos/conexao'],
+    'lições não vistas',
+  );
+  afirmar(p.erros.length === 0, p.erros.join(' | '));
+});
+
 // ----------------------------------------------------------------
 try {
   for (let i = 0; i < 60; i++) {
