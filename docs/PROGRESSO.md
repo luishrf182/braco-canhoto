@@ -15,7 +15,7 @@ Repositório: https://github.com/luishrf182/braco-canhoto
 | F3 — Player + Mapa do braço | concluída |
 | F4 — Módulo 1: Tétrades | concluída |
 | F5 — Agenda + Sessão do dia | concluída |
-| F6 — Sincronização via Gist | pendente |
+| F6 — Sincronização via Gist | concluída |
 | F7 — Base + Módulo 2: Campo harmônico | pendente |
 | F8 — Aquecimentos | pendente |
 | F9 — Módulo 3: Arpejos | pendente |
@@ -146,3 +146,20 @@ Repositório: https://github.com/luishrf182/braco-canhoto
 
 **Pendências**
 - Estados "Salvando…" e "Salvo só neste aparelho" do Resultado chegam com a sincronização (F6).
+
+## F6 — Sincronização via Gist
+
+**Feito**
+- `progresso/juncao.ts` (puro): junção item a item por `atualizadoEm` (itens, ajustes, módulos); sessões unidas por id (fica a versão mais completa, últimas 60); lições vistas unidas com a primeira data. Testado com progressos divergentes.
+- `progresso/gist.ts`: único módulo que lê o token. Cria um Gist secreto `braco-canhoto-progresso.json` na primeira vez, e um segundo aparelho o acha pelo nome. Erros tipados (sem token, token inválido, sem permissão, rede, servidor) com mensagens claras. Gist apagado no site: recomeça. Testado com GitHub falso em memória.
+- Provedor de progresso: a cópia local é sempre gravada primeiro. A sincronização (baixa → junta com o estado do momento → envia se mudou) roda ao abrir o app, ao voltar à aba, 4 s após a última mudança e ao fim da sessão. Nunca roda duas ao mesmo tempo.
+- Ajustes → Sincronização: instruções para criar o token, campo de senha, "Salvar e testar" (o token só é salvo se a conexão funcionar), status, "Sincronizar agora", "Remover token". "Apagar dados deste aparelho" também apaga o token.
+- `AvisoSync`: Hoje mostra aviso discreto só em caso de erro; Resultado mostra "Salvando…" / "Salvo e sincronizado" / "Salvo só neste aparelho" + "Tentar de novo" ou link para Ajustes.
+- `e2e/fluxos.mjs` (GitHub falso via Playwright): progresso de dois navegadores aparece nos dois; token inválido mostra mensagem e não perde dados nem salva o token; token expirado vira "Salvo só neste aparelho".
+
+**Decisões autônomas**
+- Os ajustes (tema, espelhos etc.) também sincronizam, já que são do mesmo guitarrista. O token e o id do Gist ficam só no aparelho.
+- A sincronização foi testada só com mocks. O teste com token real fica para o Luís (`ENTREGA.md`).
+
+**Pendências**
+- Nenhuma.

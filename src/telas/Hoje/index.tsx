@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react';
 import { Link, useLocation } from 'wouter';
 import { hojeISO } from '../../agenda/caixas';
 import { duracao, type ItemSessao } from '../../agenda/sessao';
+import { AvisoSync } from '../../componentes/AvisoSync';
 import { useProgresso } from '../../estado/progresso';
 import { planejarSessao, ROTULO_MOTIVO, tituloItem } from '../../estado/sessao';
 import { lerSessao } from '../../progresso/sessaoAtual';
@@ -50,6 +51,8 @@ export function Hoje() {
           })}
         </p>
       </header>
+
+      <AvisoSync discreto />
 
       {emAndamento ? (
         <section className={`cartao ${css.destaque}`}>

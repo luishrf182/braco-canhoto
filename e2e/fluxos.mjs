@@ -220,6 +220,124 @@ teste('F5: sessão de 20 min do começo ao Resultado', async (nav) => {
   await p.waitForSelector('text=Você já fez a sessão de hoje');
 });
 
+// ---------------------------------------------------------------- F6
+/** GitHub falso compartilhado entre contextos (dois "aparelhos"). */
+function githubFalso() {
+  const gists = new Map();
+  let n = 0;
+  return async (route) => {
+    const req = route.request();
+    const auth = req.headers()['authorization'] ?? '';
+    const responder = (corpo, status = 200) =>
+      route.fulfill({
+        status,
+        contentType: 'application/json',
+        headers: { 'access-control-allow-origin': '*' },
+        body: JSON.stringify(corpo),
+      });
+    if (req.method() === 'OPTIONS')
+      return route.fulfill({
+        status: 204,
+        headers: {
+          'access-control-allow-origin': '*',
+          'access-control-allow-headers': '*',
+          'access-control-allow-methods': 'GET,POST,PATCH',
+        },
+      });
+    if (auth !== 'Bearer token-de-teste') return responder({ message: 'Bad credentials' }, 401);
+    const url = new URL(req.url());
+    if (url.pathname === '/gists' && req.method() === 'GET') return responder([...gists.values()]);
+    if (url.pathname === '/gists' && req.method() === 'POST') {
+      const g = { id: 'g' + ++n, files: JSON.parse(req.postData()).files };
+      gists.set(g.id, g);
+      return responder(g, 201);
+    }
+    const g = gists.get(url.pathname.split('/')[2]);
+    if (!g) return responder({}, 404);
+    if (req.method() === 'PATCH') Object.assign(g.files, JSON.parse(req.postData()).files);
+    return responder(g);
+  };
+}
+
+async function aparelhoComGithub(nav, gh) {
+  const p = await novaPagina(nav, {}, { width: 1280, height: 720 });
+  await p.context().route('https://api.github.com/**', gh);
+  return p;
+}
+
+async function colarToken(p, token) {
+  await p.goto(BASE + '#/ajustes');
+  await p.getByLabel('Token do GitHub').fill(token);
+  await p.getByRole('button', { name: 'Salvar e testar' }).click();
+}
+
+teste('F6: progresso feito em dois navegadores aparece nos dois', async (nav) => {
+  const gh = githubFalso();
+  const a = await aparelhoComGithub(nav, gh);
+  const b = await aparelhoComGithub(nav, gh);
+  await colarToken(a, 'token-de-teste');
+  await a.waitForSelector('text=Conexão ok.');
+  await colarToken(b, 'token-de-teste');
+  await b.waitForSelector('text=Conexão ok.');
+  // A avalia um exercício; B avalia outro.
+  await a.goto(BASE + '#/exercicio/mapa-todas-notas');
+  await a.waitForSelector('text=Limpo');
+  await a.keyboard.press('1');
+  await a.waitForSelector('text=Salvo.');
+  await b.goto(BASE + '#/exercicio/mapa-oitavas/G');
+  await b.waitForSelector('text=Limpo');
+  await b.keyboard.press('2');
+  await b.waitForSelector('text=Salvo.');
+  // Espera os envios automáticos (4 s) e recarrega os dois.
+  await a.waitForTimeout(5500);
+  await a.goto(BASE + '#/ajustes');
+  await a.getByRole('button', { name: 'Sincronizar agora' }).click();
+  await a.waitForSelector('text=Sincronizado em');
+  await b.reload();
+  await b.goto(BASE + '#/ajustes');
+  await b.getByRole('button', { name: 'Sincronizar agora' }).click();
+  await b.waitForSelector('text=Sincronizado em');
+  await a.reload();
+  await a.waitForTimeout(1500);
+  const pa = await lerProgresso(a);
+  const pb = await lerProgresso(b);
+  for (const [nome, prog] of [
+    ['A', pa],
+    ['B', pb],
+  ]) {
+    afirmar(prog.itens['mapa-todas-notas|C|-'], `${nome} sem o item de A`);
+    afirmar(prog.itens['mapa-oitavas|G|-'], `${nome} sem o item de B`);
+  }
+  afirmar(a.erros.length + b.erros.length === 0, [...a.erros, ...b.erros].join(' | '));
+});
+
+teste('F6: token inválido mostra mensagem clara e não perde dados', async (nav) => {
+  const p = await aparelhoComGithub(nav, githubFalso());
+  await p.goto(BASE + '#/exercicio/mapa-todas-notas');
+  await p.waitForSelector('text=Limpo');
+  await p.keyboard.press('1');
+  await p.waitForSelector('text=Salvo.');
+  await colarToken(p, 'token-errado');
+  await p.waitForSelector('text=Token inválido ou expirado');
+  const prog = await lerProgresso(p);
+  afirmar(prog.itens['mapa-todas-notas|C|-'], 'progresso local perdido');
+  const token = await p.evaluate(() => localStorage.getItem('braco-canhoto:token'));
+  afirmar(!token, 'token inválido foi salvo');
+});
+
+teste('F6: token que expira depois vira "Salvo só neste aparelho"', async (nav) => {
+  const gh = githubFalso();
+  const p = await aparelhoComGithub(nav, gh);
+  await colarToken(p, 'token-de-teste');
+  await p.waitForSelector('text=Conexão ok.');
+  // Simula expiração trocando o token salvo.
+  await p.evaluate(() => localStorage.setItem('braco-canhoto:token', 'expirado'));
+  await p.goto(BASE + '#/hoje');
+  await p.reload();
+  await p.waitForSelector('text=Salvo só neste aparelho');
+  await p.waitForSelector('text=Token inválido ou expirado');
+});
+
 // ----------------------------------------------------------------
 try {
   for (let i = 0; i < 60; i++) {

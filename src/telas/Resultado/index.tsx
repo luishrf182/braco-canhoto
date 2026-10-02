@@ -1,6 +1,8 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { Link } from 'wouter';
 import { hojeISO, textoRevisao } from '../../agenda/caixas';
+import { AvisoSync } from '../../componentes/AvisoSync';
+import { useProgresso } from '../../estado/progresso';
 import { lerSessao } from '../../progresso/sessaoAtual';
 import css from './Resultado.module.css';
 
@@ -8,6 +10,11 @@ const ROTULO = { limpo: 'Limpo', quase: 'Quase', travou: 'Travou' } as const;
 
 export function Resultado() {
   const sessao = useMemo(() => lerSessao(), []);
+  const { sincronizar } = useProgresso();
+  // Fim da sessão: envia já, sem esperar.
+  useEffect(() => {
+    void sincronizar();
+  }, [sincronizar]);
   const hoje = hojeISO(new Date());
 
   if (!sessao || !sessao.resultados.length) {
@@ -31,9 +38,7 @@ export function Resultado() {
     <main className={css.tela}>
       <header>
         <h1>Sessão concluída</h1>
-        <p className="mudo" role="status">
-          Salvo neste aparelho.
-        </p>
+        <AvisoSync />
       </header>
 
       <section className={css.placar} aria-label="Resumo">

@@ -3,6 +3,7 @@ import { useProgresso } from '../../estado/progresso';
 import { lerErros, limparErros } from '../../progresso/erros';
 import { apagarTudoLocal } from '../../progresso/local';
 import type { Ajustes as TAjustes } from '../../tipos';
+import { Sincronizacao } from './Sincronizacao';
 import css from './Ajustes.module.css';
 
 interface Opcao<T> {
@@ -120,6 +121,8 @@ export function Ajustes() {
         />
       </section>
 
+      <Sincronizacao />
+
       <section className="pilha" aria-labelledby="aj-atalhos">
         <h2 id="aj-atalhos">Atalhos de teclado</h2>
         <p className="mudo">Funcionam também com pedal Bluetooth.</p>
@@ -138,8 +141,8 @@ export function Ajustes() {
       <section className="pilha" aria-labelledby="aj-dados">
         <h2 id="aj-dados">Dados</h2>
         <p className="mudo">
-          Seu progresso fica neste aparelho. Apagar aqui não apaga a cópia no Gist: para isso, abra
-          gist.github.com e exclua “braco-canhoto-progresso.json”.
+          Apagar aqui remove o progresso e o token deste aparelho, mas não a cópia no Gist: para
+          isso, abra gist.github.com e exclua “braco-canhoto-progresso.json”.
         </p>
         <div>
           <button
