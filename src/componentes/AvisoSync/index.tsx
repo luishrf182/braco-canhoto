@@ -37,8 +37,10 @@ export function AvisoSync({ discreto = false }: { discreto?: boolean }) {
   if (sync.status === 'desligado') {
     return (
       <p className={css.aviso} role="status">
-        Salvo neste aparelho. Para usar em outros aparelhos, ative a sincronização em{' '}
-        <Link href="/ajustes">Ajustes</Link>.
+        <span>
+          Salvo neste aparelho. Para usar em outros aparelhos, ative a sincronização em{' '}
+          <Link href="/ajustes">Ajustes</Link>.
+        </span>
       </p>
     );
   }

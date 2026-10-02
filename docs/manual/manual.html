@@ -1,0 +1,376 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<title>Braço Canhoto — Manual</title>
+<style>
+  @page { size: 90mm 195mm; margin: 0; }
+  :root {
+    --bg: #fafaf7; --surface: #ffffff; --line: #e4e4e0; --text: #1c1c1e; --muted: #5f5f64;
+    --accent: #c98200; --accent-text: #8a5900;
+    --root: #d55e00; --r3: #0072b2; --r5: #009e73; --r7: #cc79a7; --ext: #56b4e9;
+    --ok: #007a55; --err: #b3261e;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, Roboto, sans-serif;
+    font-size: 10pt; line-height: 1.36; color: var(--text); background: var(--bg);
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+  .pagina {
+    width: 90mm; height: 195mm; padding: 9mm 7mm 8mm; position: relative; overflow: hidden;
+    page-break-after: always; break-after: page; background: var(--bg);
+    display: flex; flex-direction: column; gap: 3mm;
+  }
+  .pagina:last-child { page-break-after: auto; break-after: auto; }
+  .num { position: absolute; bottom: 4mm; right: 7mm; font-size: 8pt; color: var(--muted); }
+  .secao { font-size: 7.5pt; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--accent-text); }
+  h1 { font-size: 20pt; line-height: 1.12; margin: 0; }
+  h2 { font-size: 15pt; line-height: 1.15; margin: 0; }
+  h3 { font-size: 11.5pt; margin: 1mm 0 0; }
+  p { margin: 0; }
+  ul, ol { margin: 0; padding-left: 5mm; }
+  li { margin: .6mm 0; }
+  .mudo { color: var(--muted); }
+  .tela { flex: 1 1 0; min-height: 30mm; height: 0; width: auto; max-width: 62mm; align-self: center;
+          margin-top: 1mm; border-radius: 3.5mm; border: .5mm solid #1c1c1e; box-shadow: 0 1mm 3mm rgba(0,0,0,.18); }
+  .tela.menor { max-width: 62mm; }
+  .caixa { background: var(--surface); border: .3mm solid var(--line); border-radius: 3mm; padding: 2.5mm 3mm; }
+  .dica { background: #fff6e0; border: .3mm solid #ecd39a; border-radius: 3mm; padding: 2.5mm 3mm; font-size: 9.5pt; }
+  .tabela { width: 100%; border-collapse: collapse; font-size: 9.5pt; }
+  .tabela td { padding: 1.4mm 1mm; border-bottom: .3mm solid var(--line); vertical-align: top; }
+  .tabela td:first-child { font-weight: 700; white-space: nowrap; width: 1%; padding-right: 2.5mm; }
+  kbd { font-family: inherit; font-size: 8.5pt; font-weight: 600; padding: .3mm 1.5mm; border: .3mm solid #bbb;
+        border-bottom-width: .6mm; border-radius: 1mm; background: #fff; }
+  .legenda { display: grid; grid-template-columns: 9mm 1fr; gap: 1.6mm 2mm; align-items: center; font-size: 9.5pt; }
+  .legenda svg { width: 8mm; height: 8mm; }
+  .aval { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5mm; text-align: center; font-size: 9pt; }
+  .aval div { border: .3mm solid var(--line); border-radius: 2.5mm; background: #fff; padding: 2mm 1mm; }
+  .aval strong { display: block; font-size: 11pt; }
+  .capa { justify-content: center; gap: 5mm; }
+  .capa h1 { font-size: 27pt; }
+  .passos { counter-reset: p; list-style: none; padding: 0; }
+  .passos li { counter-increment: p; padding-left: 8mm; position: relative; margin: 1.6mm 0; }
+  .passos li::before { content: counter(p); position: absolute; left: 0; top: 0; width: 5.5mm; height: 5.5mm;
+        border-radius: 50%; background: var(--accent); color: #1c1c1e; font-weight: 700; font-size: 8.5pt;
+        display: flex; align-items: center; justify-content: center; }
+  .sumario li { display: flex; justify-content: space-between; border-bottom: .3mm dotted #ccc; padding: .8mm 0; }
+  .sumario { list-style: none; padding: 0; }
+</style>
+</head>
+<body>
+
+<!-- 1. CAPA -->
+<section class="pagina capa">
+  <svg viewBox="0 0 64 64" width="70" height="70" aria-hidden="true">
+    <rect width="64" height="64" rx="14" fill="#1C1C1E"/>
+    <g stroke="#9A9A94" stroke-width="2"><line x1="8" y1="20" x2="56" y2="20"/><line x1="8" y1="32" x2="56" y2="32"/><line x1="8" y1="44" x2="56" y2="44"/></g>
+    <g stroke="#3A3A3C" stroke-width="2"><line x1="22" y1="14" x2="22" y2="50"/><line x1="42" y1="14" x2="42" y2="50"/></g>
+    <rect x="26" y="26" width="12" height="12" rx="2" fill="#F5A524"/>
+    <circle cx="48" cy="20" r="5" fill="#F2F2F0"/><circle cx="16" cy="44" r="5" fill="#F2F2F0"/>
+  </svg>
+  <h1>Braço Canhoto</h1>
+  <p style="font-size:13pt">Manual de uso</p>
+  <p class="mudo">Como estudar guitarra com o app: sessão do dia, módulos, treinos e ajustes.</p>
+  <div class="caixa">
+    <strong>Endereço</strong><br />
+    luishrf182.github.io/braco-canhoto
+  </div>
+  <ol class="sumario">
+    <li><span>1. Primeiros passos</span><span>2</span></li>
+    <li><span>2. Lendo o braço</span><span>4</span></li>
+    <li><span>3. Hoje e a Sessão do dia</span><span>5</span></li>
+    <li><span>4. Tocando um exercício</span><span>7</span></li>
+    <li><span>5. Os tipos de exercício</span><span>9</span></li>
+    <li><span>6. Trilha: módulos e treinos</span><span>12</span></li>
+    <li><span>7. Explorar</span><span>14</span></li>
+    <li><span>8. Ajustes e sincronização</span><span>15</span></li>
+    <li><span>9. Atalhos e problemas comuns</span><span>17</span></li>
+  </ol>
+</section>
+
+<!-- 2. PRIMEIROS PASSOS -->
+<section class="pagina">
+  <span class="secao">1 · Primeiros passos</span>
+  <h2>Instale como app</h2>
+  <p>Abra o endereço no navegador do celular e adicione à tela inicial: ele passa a abrir como um aplicativo, em tela cheia.</p>
+  <ul>
+    <li><strong>iPhone (Safari):</strong> Compartilhar → “Adicionar à Tela de Início”.</li>
+    <li><strong>Android (Chrome):</strong> menu ⋮ → “Adicionar à tela inicial”.</li>
+  </ul>
+  <h3>Calibração (só na primeira vez)</h3>
+  <p>O app pergunta: <em>“É assim que você vê sua guitarra?”</em> Segure a guitarra na posição de tocar, olhe para o braço de cima e compare.</p>
+  <ul>
+    <li><strong>↔ Inverter lados:</strong> troca o lado da pestana.</li>
+    <li><strong>↕ Inverter cordas:</strong> põe o Mi grave em cima ou embaixo.</li>
+  </ul>
+  <p>Quando bater, toque em <strong>Sim, é assim</strong>. Todo braço do app passa a seguir essa orientação. Dá para mudar depois em Ajustes.</p>
+  <img class="tela menor" src="img/calibracao.png" alt="" />
+  <span class="num">2</span>
+</section>
+
+<section class="pagina">
+  <span class="secao">1 · Primeiros passos</span>
+  <h2>Diagnóstico (opcional)</h2>
+  <p>Depois da calibração vem um diagnóstico de uns 10 minutos: tríades nas formas de E e A, a pentatônica nas 5 formas e nomes de notas no braço.</p>
+  <ul>
+    <li>Avalie cada item com sinceridade (Limpo, Quase ou Travou).</li>
+    <li>O que travar vira <strong>revisão</strong> nas próximas sessões. Nada fica bloqueado.</li>
+    <li>Prefere começar direto? Toque em <strong>Pular</strong>. O link para fazer depois fica na tela Hoje.</li>
+  </ul>
+  <img class="tela" src="img/diagnostico.png" alt="" />
+  <span class="num">3</span>
+</section>
+
+<!-- 3. LENDO O BRAÇO -->
+<section class="pagina">
+  <span class="secao">2 · Lendo o braço</span>
+  <h2>Cores e formatos</h2>
+  <p>O braço é sempre horizontal e espelhado para canhoto. Cada nota tem uma <strong>função</strong>, mostrada por cor <em>e</em> formato (dá para ler sem enxergar cores):</p>
+  <div class="legenda">
+    <svg viewBox="0 0 30 30"><rect x="3" y="3" width="24" height="24" rx="3" fill="#D55E00" stroke="#1c1c1e"/></svg><span><strong>Quadrado laranja:</strong> tônica (fundamental)</span>
+    <svg viewBox="0 0 30 30"><circle cx="15" cy="15" r="12" fill="#0072B2" stroke="#1c1c1e"/></svg><span><strong>Círculo azul:</strong> 3ª</span>
+    <svg viewBox="0 0 30 30"><polygon points="28,15 21.5,26.3 8.5,26.3 2,15 8.5,3.7 21.5,3.7" fill="#009E73" stroke="#1c1c1e"/></svg><span><strong>Hexágono verde:</strong> 5ª</span>
+    <svg viewBox="0 0 30 30"><polygon points="15,1 29,15 15,29 1,15" fill="#CC79A7" stroke="#1c1c1e"/></svg><span><strong>Losango rosa:</strong> 7ª</span>
+    <svg viewBox="0 0 30 30"><circle cx="15" cy="15" r="10" fill="#fff" stroke="#6b6b70" stroke-width="2"/></svg><span><strong>Círculo vazado:</strong> nota da escala</span>
+  </div>
+  <h3>O que vem escrito no ponto</h3>
+  <p>Nota (C, D♭…), grau (T, 3, b3, 7M…), intervalo ou dedo, conforme Ajustes. Em acordes e lições há um botão <strong>Graus / Notas</strong> para alternar na hora.</p>
+  <h3>Retrato × paisagem</h3>
+  <ul>
+    <li><strong>Celular em pé:</strong> o braço mostra 5 a 7 casas. Use <strong>‹ ›</strong> para ver as outras.</li>
+    <li><strong>Celular deitado, tablet ou TV:</strong> casas 0 a 15 inteiras.</li>
+  </ul>
+  <p class="mudo">A faixa clara sobre o braço marca a <strong>forma CAGED</strong> do exercício. Toque em qualquer ponto para ouvir a nota.</p>
+  <span class="num">4</span>
+</section>
+
+<!-- 4. HOJE -->
+<section class="pagina">
+  <span class="secao">3 · Hoje</span>
+  <h2>A Sessão do dia</h2>
+  <p>A tela <strong>Hoje</strong> monta seu treino. Escolha <strong>10, 20 ou 30 min</strong> e toque em <strong>Começar</strong>.</p>
+  <ul>
+    <li><strong>Aquecimento</strong> (~20%): padrões técnicos e quizzes rápidos do braço.</li>
+    <li><strong>Novo</strong> (~40%): uma lição nova e exercícios que você ainda não fez, sempre em Dó primeiro.</li>
+    <li><strong>Revisão</strong> (~40%): o que está na hora de rever, intercalado.</li>
+  </ul>
+  <img class="tela menor" src="img/hoje.png" alt="" />
+  <span class="num">5</span>
+</section>
+
+<section class="pagina">
+  <span class="secao">3 · Hoje</span>
+  <h2>Como a sessão anda</h2>
+  <ul>
+    <li>No topo aparece em que item você está (<em>“3 de 9”</em>).</li>
+    <li>Saiu no meio? Na tela Hoje aparece <strong>Continuar</strong>: o andamento fica salvo no aparelho.</li>
+    <li><strong>Outra combinação</strong> sorteia um plano diferente para o mesmo dia.</li>
+    <li>Conteúdo novo começa em <strong>Dó</strong>. Depois do primeiro “Limpo”, o app sorteia outros tons, com preferência por C, G, D, A, E, F e B♭.</li>
+  </ul>
+  <h3>No final: o Resultado</h3>
+  <p>Mostra quantos itens ficaram Limpo, Quase e Travou, o que subiu de caixa e quando cada item volta.</p>
+  <img class="tela menor" src="img/resultado.png" alt="" />
+  <span class="num">6</span>
+</section>
+
+<!-- 5. EXERCÍCIO -->
+<section class="pagina">
+  <span class="secao">4 · Tocando um exercício</span>
+  <h2>A tela de exercício</h2>
+  <p>Tudo cabe numa tela, sem rolar:</p>
+  <ol>
+    <li><strong>Instrução</strong> de uma linha (ex.: “C7M · forma de A · abertura 1”).</li>
+    <li><strong>Braço</strong> com as notas.</li>
+    <li><strong>Barra de reprodução:</strong> ▶ tocar, BPM com − e +, <strong>Contar</strong> (contagem de entrada de 4 tempos).</li>
+    <li><strong>Avaliação:</strong> Limpo, Quase ou Travou.</li>
+  </ol>
+  <p>Ouça primeiro, depois toque junto. O ponto que está soando fica aceso no braço.</p>
+  <img class="tela" src="img/tetrade.png" alt="" />
+  <span class="num">7</span>
+</section>
+
+<section class="pagina">
+  <span class="secao">4 · Tocando um exercício</span>
+  <h2>Avalie com um toque</h2>
+  <div class="aval">
+    <div><strong style="color:var(--ok)">Limpo</strong>sem erro, no tempo</div>
+    <div><strong>Quase</strong>um ou dois tropeços</div>
+    <div><strong style="color:var(--err)">Travou</strong>não saiu</div>
+  </div>
+  <h3>O BPM se ajusta sozinho</h3>
+  <ul>
+    <li><strong>Limpo:</strong> +4 BPM na próxima vez.</li>
+    <li><strong>Quase:</strong> mesmo BPM.</li>
+    <li><strong>Travou:</strong> −8 BPM.</li>
+  </ul>
+  <h3>As 3 caixas de revisão</h3>
+  <table class="tabela">
+    <tr><td>Limpo</td><td>sobe uma caixa. Volta em 1, 3 ou 7 dias (caixa 1, 2 ou 3).</td></tr>
+    <tr><td>Quase</td><td>fica na mesma caixa. Volta amanhã.</td></tr>
+    <tr><td>Travou</td><td>volta para a caixa 1. Reaparece na próxima sessão.</td></tr>
+  </table>
+  <div class="dica"><strong>Dica:</strong> seja honesto. Marcar “Limpo” cedo demais faz o item sumir por dias e acelera o BPM antes da hora.</div>
+  <p class="mudo">Depois de avaliar fora da sessão: <strong>Repetir</strong> ou <strong>Próximo</strong> (Enter).</p>
+  <span class="num">8</span>
+</section>
+
+<!-- 6. FORMATOS -->
+<section class="pagina">
+  <span class="secao">5 · Tipos de exercício</span>
+  <h2>Ver e tocar</h2>
+  <p>Um acorde, arpejo ou padrão aparece no braço. Toque ▶ para ouvir e acompanhe no metrônomo. Comece devagar; o app sobe o BPM conforme você avalia.</p>
+  <h2 style="margin-top:2mm">Quiz no braço</h2>
+  <ul>
+    <li><strong>“Que nota é esta?”:</strong> um ponto aparece sem nome; escolha a nota nos botões.</li>
+    <li><strong>“Toque a nota pedida”:</strong> toque o lugar certo no braço da tela.</li>
+    <li><strong>“Onde está a 7ª?”:</strong> toque a nota com aquela função no acorde.</li>
+  </ul>
+  <p>Ao fim, o app mostra acertos e tempo médio e <strong>sugere</strong> uma avaliação (Enter aceita).</p>
+  <img class="tela menor" src="img/quiz.png" alt="" />
+  <span class="num">9</span>
+</section>
+
+<section class="pagina">
+  <span class="secao">5 · Tipos de exercício</span>
+  <h2>Cartas</h2>
+  <p>Perguntas rápidas com 4 opções: “Que acorde é este?”, “Qual é o V7 de E♭?”, “Relativa menor de F?”. Ao responder, o certo fica verde.</p>
+  <h2 style="margin-top:2mm">Progressão com base</h2>
+  <p>Uma sequência de acordes toca em loop com <strong>bateria, baixo e pad</strong>. O acorde atual fica destacado em cima, e o braço mostra o desenho dele.</p>
+  <ul>
+    <li><strong>Levada:</strong> sem bateria, balada, pop, groove ou rock.</li>
+    <li><strong>Pad:</strong> liga ou desliga o colchão de acordes.</li>
+    <li>Toque numa cifra para ver e ouvir aquele acorde.</li>
+  </ul>
+  <img class="tela menor" src="img/progressao.png" alt="" />
+  <span class="num">10</span>
+</section>
+
+<section class="pagina">
+  <span class="secao">5 · Tipos de exercício</span>
+  <h2>Ouça e repita</h2>
+  <p>Usado nos aquecimentos:</p>
+  <ol class="passos">
+    <li>Toque ▶: contagem de 4 tempos.</li>
+    <li>O app toca o padrão (“Ouça…”).</li>
+    <li>Aparece <strong>“Sua vez: repita no clique”</strong> e o metrônomo continua.</li>
+  </ol>
+  <p>Quer treinar o ouvido? <strong>Ocultar</strong> esconde o diagrama.</p>
+  <p class="mudo">O ritmo (colcheias, tercinas ou semicolcheias) aparece entre parênteses na instrução.</p>
+  <img class="tela" src="img/aquec.png" alt="" />
+  <span class="num">11</span>
+</section>
+
+<!-- 7. TRILHA -->
+<section class="pagina">
+  <span class="secao">6 · Trilha</span>
+  <h2>Módulos e treinos</h2>
+  <p>A <strong>Trilha</strong> é para escolher por conta própria. Cada módulo tem lições, exercícios e uma barra de <strong>checkpoint</strong>.</p>
+  <table class="tabela">
+    <tr><td>Módulo 1</td><td><strong>Tétrades</strong>: 7M, 7, m7, m7(b5) e °; aberturas 1 e 2; omitir notas.</td></tr>
+    <tr><td>Módulo 2</td><td><strong>Campo harmônico</strong>: os 7 acordes de um tom, funções, relativas e 8 cadências com base.</td></tr>
+    <tr><td>Módulo 3</td><td><strong>Arpejos no CAGED</strong>: nas 5 formas e ligando as formas.</td></tr>
+    <tr><td>Treino</td><td><strong>Mapa do braço</strong>: nomes das notas, oitavas, casa 12 em diante.</td></tr>
+    <tr><td>Treino</td><td><strong>Aquecimentos</strong>: independência, grupos de 4, duas cordas, célula vertical, ligados.</td></tr>
+  </table>
+  <p>Exercícios com forma mostram botões <strong>A · E · D</strong> (ou C A G E D): cada um abre aquela forma.</p>
+  <img class="tela menor" src="img/trilha.png" alt="" />
+  <span class="num">12</span>
+</section>
+
+<section class="pagina">
+  <span class="secao">6 · Trilha</span>
+  <h2>Lições e checkpoint</h2>
+  <p>Cada <strong>lição</strong> tem 1 a 3 telas curtas: uma frase, o exemplo no braço e o botão <strong>Ouvir</strong>. Avance com <strong>Próxima</strong>; no fim, <strong>Concluir</strong> marca a lição como vista.</p>
+  <img class="tela menor" src="img/licao.png" alt="" />
+  <h3>Checkpoint</h3>
+  <ul>
+    <li><strong>Módulo 1:</strong> 5 qualidades nas formas E e A, com Limpo em 2 tons.</li>
+    <li><strong>Módulo 2:</strong> campo em 4 tons + 4 cadências Limpo.</li>
+    <li><strong>Módulo 3:</strong> arpejos de 7M, m7 e 7 nas 5 formas, em 3 tons.</li>
+  </ul>
+  <p class="mudo">A Sessão do dia traz conteúdo novo do primeiro módulo cujo checkpoint ainda não foi concluído.</p>
+  <span class="num">13</span>
+</section>
+
+<!-- 8. EXPLORAR -->
+<section class="pagina">
+  <span class="secao">7 · Explorar</span>
+  <h2>Consulta livre</h2>
+  <p>Para tirar dúvidas e tocar o que quiser, sem avaliação:</p>
+  <ul>
+    <li><strong>Acorde:</strong> tom + qualidade + forma (abre em C7M).</li>
+    <li><strong>Arpejo:</strong> as 5 tétrades nas 5 formas.</li>
+    <li><strong>Escala:</strong> maior, penta maior ou penta menor nas 5 formas.</li>
+    <li><strong>Notas:</strong> todas as posições de uma nota, casa 0 a 15.</li>
+  </ul>
+  <p><strong>Sortear</strong> escolhe um tom aleatório. ▶ toca o que está na tela.</p>
+  <img class="tela" src="img/explorar.png" alt="" />
+  <span class="num">14</span>
+</section>
+
+<!-- 9. AJUSTES -->
+<section class="pagina">
+  <span class="secao">8 · Ajustes</span>
+  <h2>Personalize</h2>
+  <table class="tabela">
+    <tr><td>Tema</td><td>claro, escuro ou o do sistema.</td></tr>
+    <tr><td>Nomes</td><td>C D E ou Dó Ré Mi.</td></tr>
+    <tr><td>Rótulo</td><td>o que vai escrito no ponto: nota, grau, intervalo ou dedo.</td></tr>
+    <tr><td>Braço</td><td>pestana à direita ou à esquerda; Mi agudo em cima ou embaixo.</td></tr>
+    <tr><td>Modo TV</td><td>para espelhar na TV: quizzes viram “pense e revele” (Revelar → Próxima).</td></tr>
+    <tr><td>Dados</td><td><strong>Apagar dados deste aparelho</strong> (não apaga o Gist).</td></tr>
+    <tr><td>Sobre</td><td>versão do app e últimos erros (útil se algo falhar).</td></tr>
+  </table>
+  <img class="tela menor" src="img/ajustes.png" alt="" />
+  <span class="num">15</span>
+</section>
+
+<section class="pagina">
+  <span class="secao">8 · Ajustes</span>
+  <h2>Sincronizar entre aparelhos</h2>
+  <p>Sem isso, o progresso fica só no aparelho. Com isso, celular, tablet e computador se juntam num <strong>Gist secreto</strong> no seu GitHub.</p>
+  <ol class="passos">
+    <li>No GitHub: <strong>Settings → Developer settings → Fine-grained tokens → Generate</strong>.</li>
+    <li>Em <em>Account permissions</em>, marque só <strong>Gists: Read and write</strong>. Validade: 1 ano.</li>
+    <li>Copie o token (começa com <code>github_pat_</code>).</li>
+    <li>No app: <strong>Ajustes → Sincronização</strong>, cole e toque em <strong>Salvar e testar</strong>.</li>
+    <li>Repita o passo 4 nos outros aparelhos com o mesmo token.</li>
+  </ol>
+  <div class="dica"><strong>Segurança:</strong> o token fica só no seu aparelho e só mexe em Gists. Não compartilhe. Se vencer, o app avisa (“Salvo só neste aparelho”); crie outro e cole de novo.</div>
+  <p class="mudo">O app sincroniza sozinho ao abrir, ao voltar para ele e alguns segundos depois de cada avaliação. Para forçar: <strong>Sincronizar agora</strong>.</p>
+  <span class="num">16</span>
+</section>
+
+<!-- 10. ATALHOS / PROBLEMAS -->
+<section class="pagina">
+  <span class="secao">9 · Atalhos e problemas</span>
+  <h2>Teclado e pedal</h2>
+  <p>Com teclado ou pedal Bluetooth (que envia teclas), dá para treinar sem soltar a guitarra:</p>
+  <table class="tabela">
+    <tr><td><kbd>Espaço</kbd></td><td>tocar / pausar</td></tr>
+    <tr><td><kbd>←</kbd> <kbd>→</kbd></td><td>BPM −2 / +2 (com Shift: ±10)</td></tr>
+    <tr><td><kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd></td><td>Limpo / Quase / Travou</td></tr>
+    <tr><td><kbd>Enter</kbd></td><td>próximo, ou aceitar a avaliação sugerida</td></tr>
+  </table>
+  <div class="dica"><strong>Dica:</strong> um pedal Bluetooth configurado para Espaço e 1/2/3 deixa as duas mãos na guitarra o tempo todo.</div>
+  <span class="num">17</span>
+</section>
+
+<section class="pagina">
+  <span class="secao">9 · Atalhos e problemas</span>
+  <h2>Se algo não funcionar</h2>
+  <table class="tabela">
+    <tr><td>Sem som</td><td>Toque ▶ de novo (o navegador só libera o áudio após um toque). No iPhone, desligue a <strong>chave de silencioso</strong>.</td></tr>
+    <tr><td>Som atrasado na TV</td><td>Normal no espelhamento. Use o som pelo celular.</td></tr>
+    <tr><td>Desenho espelhado errado</td><td>Ajustes → Braço.</td></tr>
+    <tr><td>“Salvo só neste aparelho”</td><td>Sem internet ou token vencido. Nada se perde; sincroniza depois.</td></tr>
+    <tr><td>Erro na tela</td><td>Toque em <strong>Recarregar</strong>. O erro fica em Ajustes → Sobre.</td></tr>
+  </table>
+  <p class="mudo" style="margin-top:auto">Bom estudo — 20 minutos por dia rendem mais que 2 horas no fim de semana.</p>
+  <span class="num">18</span>
+</section>
+
+</body>
+</html>
