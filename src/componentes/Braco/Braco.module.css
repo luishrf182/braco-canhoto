@@ -1,0 +1,191 @@
+.braco {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: 100%;
+  min-height: 0;
+}
+
+.svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 100%;
+  font-family: inherit;
+  user-select: none;
+  touch-action: manipulation;
+  --marcador-borda: #1c1c1e;
+}
+
+:global([data-theme='dark']) .svg {
+  --marcador-borda: transparent;
+}
+
+.sombra {
+  fill: var(--accent);
+  opacity: 0.12;
+}
+
+.inlay {
+  fill: var(--fret);
+}
+
+.traste {
+  stroke: var(--fret);
+  stroke-width: 2;
+}
+
+.pestana {
+  stroke: var(--nut);
+  stroke-width: 6;
+  stroke-linecap: round;
+}
+
+.corda {
+  stroke: var(--string);
+}
+
+.nomeCorda {
+  fill: var(--muted);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.numero {
+  fill: var(--muted);
+  font-size: 12px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+
+.alvo {
+  fill: transparent;
+  cursor: pointer;
+}
+
+.alvo:hover {
+  fill: var(--accent);
+  fill-opacity: 0.12;
+}
+
+.alvo:focus-visible {
+  outline: none;
+  fill: var(--accent);
+  fill-opacity: 0.25;
+}
+
+.marcador > :is(circle, rect, polygon) {
+  stroke: var(--marcador-borda);
+  stroke-width: 1.25;
+}
+
+.marcador text {
+  font-weight: 700;
+  pointer-events: none;
+}
+
+.marcador {
+  transition: transform 80ms ease-out;
+}
+
+.clicavel {
+  cursor: pointer;
+}
+
+.pfundamental > :is(circle, rect, polygon) {
+  fill: var(--role-root);
+}
+.pfundamental text {
+  fill: #1c1c1e;
+}
+
+.p3 > :is(circle, rect, polygon) {
+  fill: var(--role-3);
+}
+.p3 text {
+  fill: #ffffff;
+}
+
+.p5 > :is(circle, rect, polygon) {
+  fill: var(--role-5);
+}
+.p5 text {
+  fill: #1c1c1e;
+}
+
+.p7 > :is(circle, rect, polygon) {
+  fill: var(--role-7);
+}
+.p7 text {
+  fill: #1c1c1e;
+}
+
+.pextensao > :is(circle, rect, polygon) {
+  fill: var(--role-ext);
+}
+.pextensao text {
+  fill: #1c1c1e;
+}
+
+.pescala > :is(circle, rect, polygon) {
+  fill: var(--surface);
+  stroke: var(--muted);
+  stroke-width: 1.75;
+}
+.pescala text {
+  fill: var(--text);
+  font-weight: 600;
+}
+
+/* Nota de escala "fantasma": só o contorno. */
+.fantasma > :is(circle, rect, polygon) {
+  fill: var(--bg);
+  stroke-width: 1.75;
+}
+.fantasma.pfundamental > :is(circle, rect, polygon) {
+  stroke: var(--role-root);
+}
+.fantasma text {
+  fill: var(--text);
+}
+
+.ativo {
+  transform: scale(1.18);
+}
+
+.anel {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 3;
+}
+
+.certo circle {
+  fill: var(--ok);
+}
+.errado circle {
+  fill: var(--err);
+}
+.certo text,
+.errado text {
+  fill: #ffffff;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.paginacao {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.paginacao button {
+  font-size: 24px;
+  line-height: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ativo {
+    transform: none;
+  }
+}

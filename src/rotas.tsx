@@ -1,35 +1,51 @@
-import { Redirect, Route, Switch } from 'wouter';
+import type { ReactNode } from 'react';
+import { Redirect, Route, Switch, useLocation } from 'wouter';
 import { Moldura } from './componentes/Moldura';
+import { useProgresso } from './estado/progresso';
 import { Hoje } from './telas/Hoje';
 import { Ajustes } from './telas/Ajustes';
+import { Calibracao } from './telas/Calibracao';
+import { Explorar } from './telas/Explorar';
 import { EmBreve } from './telas/EmBreve';
+
+function ExigeCalibracao({ children }: { children: ReactNode }) {
+  const { ajustes } = useProgresso();
+  const [local] = useLocation();
+  if (!ajustes.calibrado && local !== '/calibracao') return <Redirect to="/calibracao" replace />;
+  return <>{children}</>;
+}
 
 export function Rotas() {
   return (
-    <Switch>
-      <Route path="/hoje">
-        <Moldura>
-          <Hoje />
-        </Moldura>
-      </Route>
-      <Route path="/trilha">
-        <Moldura>
-          <EmBreve titulo="Trilha" />
-        </Moldura>
-      </Route>
-      <Route path="/explorar">
-        <Moldura>
-          <EmBreve titulo="Explorar" />
-        </Moldura>
-      </Route>
-      <Route path="/ajustes">
-        <Moldura>
-          <Ajustes />
-        </Moldura>
-      </Route>
-      <Route>
-        <Redirect to="/hoje" replace />
-      </Route>
-    </Switch>
+    <ExigeCalibracao>
+      <Switch>
+        <Route path="/calibracao">
+          <Calibracao />
+        </Route>
+        <Route path="/hoje">
+          <Moldura>
+            <Hoje />
+          </Moldura>
+        </Route>
+        <Route path="/trilha">
+          <Moldura>
+            <EmBreve titulo="Trilha" />
+          </Moldura>
+        </Route>
+        <Route path="/explorar">
+          <Moldura>
+            <Explorar />
+          </Moldura>
+        </Route>
+        <Route path="/ajustes">
+          <Moldura>
+            <Ajustes />
+          </Moldura>
+        </Route>
+        <Route>
+          <Redirect to="/hoje" replace />
+        </Route>
+      </Switch>
+    </ExigeCalibracao>
   );
 }

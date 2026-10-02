@@ -1,0 +1,52 @@
+.tela {
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--space-4);
+  padding: var(--space-4) var(--space-3);
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.topo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  max-width: 560px;
+}
+
+.areaBraco {
+  min-height: 0;
+  display: flex;
+}
+
+.controles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.controles :global(.btn-primario) {
+  margin-left: auto;
+}
+
+@media (orientation: landscape) and (max-height: 500px) {
+  .tela {
+    gap: var(--space-3);
+    padding: var(--space-3);
+  }
+  .topo p {
+    display: none;
+  }
+}
+
+@media (max-width: 420px) {
+  .controles :global(.btn) {
+    flex: 1;
+  }
+  .controles :global(.btn-primario) {
+    flex-basis: 100%;
+    min-height: 52px;
+  }
+}

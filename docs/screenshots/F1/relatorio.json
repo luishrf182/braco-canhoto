@@ -1,0 +1,142 @@
+[
+  {
+    "tela": "calibracao",
+    "resolucao": "360x640",
+    "tema": "claro",
+    "ok": true,
+    "rolagemH": false,
+    "rolagemV": false,
+    "pequenos": [],
+    "erros": []
+  },
+  {
+    "tela": "calibracao",
+    "resolucao": "390x844",
+    "tema": "claro",
+    "ok": true,
+    "rolagemH": false,
+    "rolagemV": false,
+    "pequenos": [],
+    "erros": []
+  },
+  {
+    "tela": "calibracao",
+    "resolucao": "390x844",
+    "tema": "escuro",
+    "ok": true,
+    "rolagemH": false,
+    "rolagemV": false,
+    "pequenos": [],
+    "erros": []
+  },
+  {
+    "tela": "calibracao",
+    "resolucao": "844x390",
+    "tema": "claro",
+    "ok": true,
+    "rolagemH": false,
+    "rolagemV": false,
+    "pequenos": [],
+    "erros": []
+  },
+  {
+    "tela": "calibracao",
+    "resolucao": "768x1024",
+    "tema": "claro",
+    "ok": true,
+    "rolagemH": false,
+    "rolagemV": false,
+    "pequenos": [],
+    "erros": []
+  },
+  {
+    "tela": "calibracao",
+    "resolucao": "1280x720",
+    "tema": "claro",
+    "ok": true,
+    "rolagemH": false,
+    "rolagemV": false,
+    "pequenos": [],
+    "erros": []
+  },
+  {
+    "tela": "calibracao",
+    "resolucao": "1280x720",
+    "tema": "escuro",
+    "ok": true,
+    "rolagemH": false,
+    "rolagemV": false,
+    "pequenos": [],
+    "erros": []
+  },
+  {
+    "tela": "explorar",
+    "resolucao": "360x640",
+    "tema": "claro",
+    "ok": true,
+    "rolagemH": false,
+    "rolagemV": false,
+    "pequenos": [],
+    "erros": []
+  },
+  {
+    "tela": "explorar",
+    "resolucao": "390x844",
+    "tema": "claro",
+    "ok": true,
+    "rolagemH": false,
+    "rolagemV": false,
+    "pequenos": [],
+    "erros": []
+  },
+  {
+    "tela": "explorar",
+    "resolucao": "390x844",
+    "tema": "escuro",
+    "ok": true,
+    "rolagemH": false,
+    "rolagemV": false,
+    "pequenos": [],
+    "erros": []
+  },
+  {
+    "tela": "explorar",
+    "resolucao": "844x390",
+    "tema": "claro",
+    "ok": true,
+    "rolagemH": false,
+    "rolagemV": false,
+    "pequenos": [],
+    "erros": []
+  },
+  {
+    "tela": "explorar",
+    "resolucao": "768x1024",
+    "tema": "claro",
+    "ok": true,
+    "rolagemH": false,
+    "rolagemV": false,
+    "pequenos": [],
+    "erros": []
+  },
+  {
+    "tela": "explorar",
+    "resolucao": "1280x720",
+    "tema": "claro",
+    "ok": true,
+    "rolagemH": false,
+    "rolagemV": false,
+    "pequenos": [],
+    "erros": []
+  },
+  {
+    "tela": "explorar",
+    "resolucao": "1280x720",
+    "tema": "escuro",
+    "ok": true,
+    "rolagemH": false,
+    "rolagemV": false,
+    "pequenos": [],
+    "erros": []
+  }
+]

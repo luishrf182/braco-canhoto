@@ -67,6 +67,57 @@ export function Ajustes() {
           ]}
           aoMudar={(tema) => atualizarAjustes({ tema })}
         />
+        <Grupo<TAjustes['nomesNotas']>
+          titulo="Nomes das notas"
+          valor={ajustes.nomesNotas}
+          opcoes={[
+            { valor: 'letras', rotulo: 'C D E' },
+            { valor: 'do-re-mi', rotulo: 'Dó Ré Mi' },
+          ]}
+          aoMudar={(nomesNotas) => atualizarAjustes({ nomesNotas })}
+        />
+        <Grupo<TAjustes['rotulo']>
+          titulo="Rótulo nos pontos do braço"
+          valor={ajustes.rotulo}
+          opcoes={[
+            { valor: 'nota', rotulo: 'Nota' },
+            { valor: 'grau', rotulo: 'Grau' },
+            { valor: 'intervalo', rotulo: 'Intervalo' },
+            { valor: 'dedo', rotulo: 'Dedo' },
+          ]}
+          aoMudar={(rotulo) => atualizarAjustes({ rotulo })}
+        />
+      </section>
+
+      <section className="pilha" aria-labelledby="aj-braco">
+        <h2 id="aj-braco">Braço</h2>
+        <Grupo<boolean>
+          titulo="Lados (pestana)"
+          valor={ajustes.espelhoHorizontal}
+          opcoes={[
+            { valor: true, rotulo: 'Pestana à direita' },
+            { valor: false, rotulo: 'Pestana à esquerda' },
+          ]}
+          aoMudar={(espelhoHorizontal) => atualizarAjustes({ espelhoHorizontal })}
+        />
+        <Grupo<boolean>
+          titulo="Cordas"
+          valor={ajustes.espelhoVertical}
+          opcoes={[
+            { valor: false, rotulo: 'Mi agudo em cima' },
+            { valor: true, rotulo: 'Mi grave em cima' },
+          ]}
+          aoMudar={(espelhoVertical) => atualizarAjustes({ espelhoVertical })}
+        />
+        <Grupo<boolean>
+          titulo="Modo TV (quizzes viram “pense e revele”)"
+          valor={ajustes.penseERevele}
+          opcoes={[
+            { valor: false, rotulo: 'Desligado' },
+            { valor: true, rotulo: 'Ligado' },
+          ]}
+          aoMudar={(penseERevele) => atualizarAjustes({ penseERevele })}
+        />
       </section>
 
       <section className="pilha" aria-labelledby="aj-atalhos">
