@@ -10,8 +10,8 @@ Repositório: https://github.com/luishrf182/braco-canhoto
 | Fase | Status |
 |---|---|
 | F0 — Esqueleto publicado | concluída |
-| F1 — Braço + Calibração + Explorar | pendente |
-| F2 — Áudio base | pendente |
+| F1 — Braço + Calibração + Explorar | concluída |
+| F2 — Áudio base | concluída |
 | F3 — Player + Mapa do braço | pendente |
 | F4 — Módulo 1: Tétrades | pendente |
 | F5 — Agenda + Sessão do dia | pendente |
@@ -48,3 +48,38 @@ Repositório: https://github.com/luishrf182/braco-canhoto
 
 **Pendências**
 - Nenhuma.
+
+## F1 — Braço canhoto + Calibração + Explorar (notas)
+
+**Feito**
+- `teoria/notas.ts`: afinação, `notaNa`, `posicoesDe`, `formatarNota` (♯/♭ e Dó-Ré-Mi), `TONS`. Testes: cordas soltas, casa 12, fatos conhecidos, enarmonia.
+- Componente `Braco` (SVG): espelhos horizontal/vertical (única regra de espelho do app), marcadores por papel com forma própria (fundamental quadrada, 3ª círculo, 5ª hexágono, 7ª losango, extensão triângulo, escala vazada), rótulo nota/grau/intervalo/dedo, camada de sombra (forma CAGED), destaque sincronizado, áreas de toque para quiz, retorno certo/errado.
+- Retrato estreito (< 700 px): janela de 5–7 casas com paginação ‹ › (as setas seguem o espelho). Paisagem, tablet e TV: 0–15.
+- Calibração no primeiro acesso (↔ inverter lados, ↕ inverter cordas), persistida. Ajustes também permite trocar.
+- Explorar: "todas as notas X" com `SeletorTom` (12 tons + sortear).
+- `revisor-teoria`: aprovado. Auditoria: 14/14 sem rolagem.
+
+**Decisões autônomas**
+- `tonal` fixado em 6.4.2: o pacote 6.5.0 publicado no npm está sem os arquivos `dist/index.js`/`.mjs`.
+- Para distinguir papéis sem cor, cada papel tem um formato (o blueprint só exigia o quadrado da fundamental).
+- Marcadores ganham contorno escuro no tema claro para atingir 3:1 sobre o fundo (azul-claro/rosa Okabe-Ito sozinhos não atingem).
+- Texto escuro dentro dos marcadores (exceto a 3ª, azul-escuro, com texto branco), para contraste AA.
+
+**Pendências**
+- Nenhuma.
+
+## F2 — Áudio base
+
+**Feito**
+- `audio/motor.ts`: Tone.js por import dinâmico no primeiro "Tocar"; nota dedilhada (PolySynth triangular + passa-baixa), clique de metrônomo com acento, `tocarSequencia` com contagem de entrada e loop, `metronomo`, `definirBpm` (rampa de 150 ms, sem estalo), `parar`, `aoTocar` (via Tone.Draw, sincronizado com o som), `aoMudarEstado`.
+- `BarraReproducao`: tocar/parar, BPM grande (56 px, tabular) com ±, contagem, atalhos (espaço, ←/→, Shift = ±10), estados "Carregando som…" e "Som bloqueado", aviso do iOS na primeira vez.
+- Explorar: tocar a sequência de notas acende cada ponto em sincronia; tocar um ponto toca a nota; a janela em retrato acompanha a nota que soa.
+- `e2e/audio.mjs`: confere que a abertura não baixa o Tone.js, que o chunk chega após "Tocar", que o destaque avança e que não há erro no console.
+
+**Decisões autônomas**
+- O relógio do Tone usa `setTimeout` (não Worker): a CSP do blueprint (`script-src 'self'`) bloqueia Worker a partir de blob. O contexto é criado antes do índice do Tone para evitar o Worker padrão. CSP mantida exatamente como no blueprint.
+- Sem `PluckSynth`: ele depende de AudioWorklet via blob (também bloqueado pela CSP).
+- Agendamento em ticks do Transport, para a mudança de BPM valer no meio da sequência.
+
+**Pendências**
+- "O BPM muda sem estalo" e "o ponto aceso coincide com o som" precisam de conferência auditiva no celular (vai para o roteiro de `ENTREGA.md`).

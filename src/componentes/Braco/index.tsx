@@ -140,6 +140,17 @@ export function Braco({
   const [inicio, setInicio] = useState(inicioIdeal);
   useEffect(() => setInicio(inicioIdeal), [inicioIdeal]);
 
+  // A janela acompanha a nota que está soando quando ela sai da tela.
+  const casaTocando = tocandoAgora !== null ? marcadores[tocandoAgora]?.casa : undefined;
+  useEffect(() => {
+    if (!compacto || faixa || casaTocando === undefined) return;
+    setInicio((s) => {
+      const f = s + tamJanela - 1;
+      if (casaTocando >= s && casaTocando <= f) return s;
+      return Math.max(0, Math.min(CASA_MAX - tamJanela + 1, casaTocando - 1));
+    });
+  }, [casaTocando, compacto, faixa, tamJanela]);
+
   const [ini, fim]: [number, number] = faixa
     ? faixa
     : compacto
