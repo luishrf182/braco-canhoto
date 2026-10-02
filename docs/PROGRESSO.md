@@ -13,7 +13,7 @@ Repositório: https://github.com/luishrf182/braco-canhoto
 | F1 — Braço + Calibração + Explorar | concluída |
 | F2 — Áudio base | concluída |
 | F3 — Player + Mapa do braço | concluída |
-| F4 — Módulo 1: Tétrades | pendente |
+| F4 — Módulo 1: Tétrades | concluída |
 | F5 — Agenda + Sessão do dia | pendente |
 | F6 — Sincronização via Gist | pendente |
 | F7 — Base + Módulo 2: Campo harmônico | pendente |
@@ -105,3 +105,25 @@ Repositório: https://github.com/luishrf182/braco-canhoto
 
 **Pendências**
 - Nenhuma.
+
+## F4 — Módulo 1: Tétrades
+
+**Feito**
+- `teoria/acordes.ts` (5 qualidades + tríades via tonal; graus T, 3, b3, 5, b5, 7M, 7, bb7), `teoria/cifra.ts` (C7M, Dm7, G7, Bm7(b5), B°, E♭7M, C/E), `teoria/voicings.ts`: formas CAGED calculadas a partir da afinação ("centro" de cada corda + nota do acorde mais próxima), tríades nas 5 formas, tétrades na abertura 1 (A, D) e na abertura 2 (E), omissão da tônica ou da 5ª, outra região (`casaMin`).
+- Testes: acordes abertos e pestanas conhecidas, tétrades usuais (C7M x3545x, G7M 3x443x, G° 3x232x, D7M xx0222...), propriedades em 5 qualidades × 12 tons × formas.
+- Geradores: `verTetrade`, `identificarTetrade` (cartas), `ondeEstaGrau` (toque a 7ª/3ª). Formato `identificacao` (Cartas) e pergunta `marcar-grau` no quiz.
+- `JanelaAcorde` (o Braço com 5 casas), tela de Lição (texto + exemplo do motor + Ouvir + Graus/Notas), Trilha com módulo, lições, exercícios por forma (A/E/D) e barra de checkpoint.
+- Testes de conteúdo: ≤ 2 frases por tela, toda lição em C, todo modelo gera nos 12 tons e formas, checkpoint aponta para modelos existentes.
+- `e2e/fluxos.mjs`: trilha de ponta a ponta (lição → exercício → cartas → quiz) e checkpoint concluído.
+- `revisor-teoria`: 1 erro de texto corrigido (abertura 2) e 1 ajuste de precisão (omissão). Restante aprovado.
+
+**Decisões autônomas**
+- Tétrades só nas formas A, D (abertura 1) e E (abertura 2), como o blueprint define. As formas de C e G existem para tríades (e para arpejos na F9).
+- **Divergência com o blueprint (para o Luís revisar):** o §3 diz "Abertura 2: a quinta desce uma oitava (T-7-3-5)". Segundo o revisor, em relação à abertura 1 (T-5-7-3) a 5ª *sobe* para a 2ª corda. O texto da lição ficou neutro: "a 7ª vai para a 4ª corda e a 5ª fica no agudo". O `BLUEPRINT.md` não foi alterado.
+- Nos quizzes de identificação, os marcadores escondem o formato do papel (só a tônica continua quadrada) até a resposta: senão o losango entregaria a 7ª.
+- "°" = diminuto com 7ª diminuta, com grafia teórica (E♭° = E♭ G♭ B♭♭ D♭♭).
+- O exercício de progressão do Módulo 1 (sequência de tétrades em 2 regiões) entra na F7, junto com o formato `progressao`.
+- Rótulo padrão "Graus" nas telas de acorde, com botão para trocar por notas.
+
+**Pendências**
+- Exercício de progressão do Módulo 1 → F7.

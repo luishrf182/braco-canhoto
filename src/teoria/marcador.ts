@@ -17,4 +17,6 @@ export interface Marcador {
   dedo?: number;
   /** Desenha o marcador sem rótulo (quiz "que nota é esta?"). */
   semRotulo?: boolean;
+  /** Desenha como nota neutra (exceto a fundamental), para não entregar a resposta do quiz. */
+  papelOculto?: boolean;
 }

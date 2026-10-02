@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState, type KeyboardEvent } from 'react';
 import { useProgresso } from '../../estado/progresso';
 import { CASA_MAX, CORDAS, formatarNota, notaNa, type Corda } from '../../teoria/notas';
 import type { Marcador, Papel } from '../../teoria/marcador';
@@ -86,6 +86,10 @@ function forma(papel: Papel, x: number, y: number, r: number): JSX.Element {
     default:
       return <circle cx={x} cy={y} r={r} />;
   }
+}
+
+function papelVisivel(m: Marcador): Papel {
+  return m.papelOculto && m.papel !== 'fundamental' ? 'escala' : m.papel;
 }
 
 /** Calcula a faixa visível. Em retrato: janela de 5–7 casas, com paginação se precisar. */
@@ -350,16 +354,29 @@ export function Braco({
               key={`m${i}-${m.corda}-${m.casa}`}
               className={[
                 css.marcador,
-                css['p' + m.papel.replace(/\W/g, '')] ?? '',
+                css['p' + papelVisivel(m).replace(/\W/g, '')] ?? '',
                 m.fantasma ? css.fantasma : '',
                 ativo ? css.ativo : '',
                 aoTocarMarcador ? css.clicavel : '',
               ].join(' ')}
               onClick={aoTocarMarcador ? () => aoTocarMarcador(i) : undefined}
+              {...(aoTocarMarcador
+                ? {
+                    role: 'button',
+                    tabIndex: 0,
+                    'aria-label': `Corda ${m.corda}, casa ${m.casa}${texto ? ': ' + texto : ''}`,
+                    onKeyDown: (e: KeyboardEvent<SVGGElement>) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        aoTocarMarcador(i);
+                      }
+                    },
+                  }
+                : {})}
               style={{ transformOrigin: `${x}px ${y}px` }}
             >
               {ativo && <circle className={css.anel} cx={x} cy={y} r={R + 6} />}
-              {forma(m.papel, x, y, R)}
+              {forma(papelVisivel(m), x, y, R)}
               {texto && (
                 <text
                   x={x}

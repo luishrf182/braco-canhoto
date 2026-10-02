@@ -63,6 +63,7 @@ export function QuizBraco({ perguntas, aoTerminar, aoMudarInstrucao }: Props) {
     if (!p) return;
     if (p.tipo === 'nome-do-ponto')
       aoMudarInstrucao(revelarModo ? 'Pense: que nota é esta?' : 'Que nota é esta?');
+    else if (p.tipo === 'marcar-grau') aoMudarInstrucao(p.texto);
     else
       aoMudarInstrucao(
         `${revelarModo ? 'Pense onde está' : 'Toque'} ${nome(p.nota)}${p.corda ? ` na corda ${p.corda}` : ''}`,
@@ -114,6 +115,15 @@ export function QuizBraco({ perguntas, aoTerminar, aoMudarInstrucao }: Props) {
         },
       ];
     }
+    if (p.tipo === 'marcar-grau') {
+      const mostrar = revelado || retorno.length > 0;
+      return p.marcadores.map((m, idx) => ({
+        ...m,
+        semRotulo: !mostrar,
+        papelOculto: !mostrar,
+        ...(mostrar && !p.certos.includes(idx) ? { fantasma: true } : {}),
+      }));
+    }
     if (revelado || retorno.some((r) => r.tipo === 'errado')) {
       return posicoesDe(p.nota, p.faixa)
         .filter((x) => !p.corda || x.corda === p.corda)
@@ -162,6 +172,16 @@ export function QuizBraco({ perguntas, aoTerminar, aoMudarInstrucao }: Props) {
     avancar(certo, certo ? 500 : 1500);
   };
 
+  const aoTocarMarcador = (idx: number) => {
+    if (bloqueado || p.tipo !== 'marcar-grau' || revelarModo) return;
+    const m = p.marcadores[idx];
+    if (!m) return;
+    const certo = p.certos.includes(idx);
+    if (m.midi !== undefined) tocarSeAtivo(m.midi);
+    setRetorno([{ corda: m.corda, casa: m.casa, tipo: certo ? 'certo' : 'errado' }]);
+    avancar(certo, certo ? 700 : 1800);
+  };
+
   return (
     <>
       <div className={css.contador} aria-live="polite">
@@ -172,13 +192,18 @@ export function QuizBraco({ perguntas, aoTerminar, aoMudarInstrucao }: Props) {
       <div className={css.areaBraco}>
         <Braco
           marcadores={marcadores}
-          rotulo="nota"
-          retorno={retorno}
+          rotulo={p.tipo === 'marcar-grau' ? 'grau' : 'nota'}
+          retorno={p.tipo === 'marcar-grau' && retorno[0]?.tipo === 'certo' ? [] : retorno}
           aoTocar={p.tipo === 'tocar-nota' && !revelarModo ? aoTocarCasa : undefined}
+          {...(p.tipo === 'marcar-grau'
+            ? { faixa: p.faixa, aoTocarMarcador, tocandoAgora: null }
+            : {})}
           descricao={
             p.tipo === 'nome-do-ponto'
               ? `Ponto na corda ${p.corda}, casa ${p.casa}`
-              : `Braço para tocar ${nome(p.nota)}`
+              : p.tipo === 'marcar-grau'
+                ? p.texto
+                : `Braço para tocar ${nome(p.nota)}`
           }
         />
       </div>

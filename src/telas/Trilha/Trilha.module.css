@@ -62,3 +62,76 @@
   align-items: center;
   gap: var(--space-1);
 }
+
+.subtitulo {
+  margin: 0;
+  padding: var(--space-2) var(--space-3);
+  border-top: 1px solid var(--line);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.checkpoint {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-2);
+}
+
+.barra {
+  flex: 1;
+  height: 8px;
+  border-radius: 4px;
+  background: var(--line);
+  overflow: hidden;
+}
+
+.barra span {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+}
+
+.criterio {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.linhaFormas {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  padding: var(--space-1) var(--space-3);
+  border-top: 1px solid var(--line);
+  flex-wrap: wrap;
+}
+
+.nomeModelo {
+  display: flex;
+  flex-direction: column;
+}
+
+.formas {
+  display: flex;
+  gap: var(--space-1);
+}
+
+.forma {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.forma:hover {
+  border-color: var(--accent);
+}

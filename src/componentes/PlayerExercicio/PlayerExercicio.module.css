@@ -193,3 +193,40 @@
     gap: var(--space-3);
   }
 }
+
+.opcoes {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-2);
+}
+
+.opcao {
+  min-height: 52px;
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  background: var(--surface);
+  font-size: 20px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.opcao:hover:not(:disabled) {
+  border-color: var(--muted);
+}
+
+.opcao.certa,
+.opcao.errada {
+  color: #fff;
+}
+
+.cartaTexto {
+  text-align: center;
+  font-size: 32px;
+  font-weight: 600;
+}
+
+@media (min-width: 700px) {
+  .opcoes {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}

@@ -8,6 +8,7 @@ import type { Avaliacao as TAvaliacao } from '../../tipos';
 import { Avaliacao } from '../Avaliacao';
 import { BarraReproducao } from '../BarraReproducao';
 import { Braco } from '../Braco';
+import { Cartas } from './Cartas';
 import { QuizBraco, type ResultadoQuiz } from './QuizBraco';
 import css from './PlayerExercicio.module.css';
 
@@ -37,7 +38,7 @@ export function PlayerExercicio({
   const [resultadoQuiz, setResultadoQuiz] = useState<ResultadoQuiz | null>(null);
 
   const instrucao = formatarTexto(instrucaoQuiz ?? exercicio.instrucao, ajustes.nomesNotas);
-  const ehQuiz = exercicio.formato === 'quiz-braco';
+  const ehQuiz = exercicio.formato === 'quiz-braco' || exercicio.formato === 'identificacao';
   const podeAvaliar = !ehQuiz || resultadoQuiz !== null;
 
   const avaliar = useCallback(
@@ -69,7 +70,14 @@ export function PlayerExercicio({
 
       <p className={css.instrucao}>{instrucao}</p>
 
-      {ehQuiz && exercicio.quiz ? (
+      {exercicio.formato === 'identificacao' && exercicio.cartas ? (
+        <Cartas
+          key={exercicio.chave + exercicio.cartas.length}
+          cartas={exercicio.cartas}
+          aoTerminar={setResultadoQuiz}
+          aoMudarInstrucao={setInstrucaoQuiz}
+        />
+      ) : ehQuiz && exercicio.quiz ? (
         <QuizBraco
           key={exercicio.chave + exercicio.quiz.length}
           perguntas={exercicio.quiz}
@@ -106,6 +114,8 @@ function VerTocar({
   const [contagem, setContagem] = useState(true);
   const [comNotas, setComNotas] = useState(true);
   const temSequencia = !!exercicio.eventos?.length;
+  const temGrau = exercicio.marcadores.some((m) => m.grau);
+  const [rotulo, setRotulo] = useState<'grau' | 'nota'>('grau');
 
   const tocar = () => {
     if (!temSequencia || (!comNotas && exercicio.clique)) {
@@ -126,6 +136,10 @@ function VerTocar({
         <Braco
           marcadores={exercicio.marcadores}
           {...(exercicio.sombra ? { sombra: exercicio.sombra } : {})}
+          {...(exercicio.faixa && exercicio.faixa[1] - exercicio.faixa[0] <= 6
+            ? { faixa: exercicio.faixa }
+            : {})}
+          rotulo={temGrau ? rotulo : 'nota'}
           tocandoAgora={tocandoAgora >= 0 ? tocandoAgora : null}
           aoTocarMarcador={(i) => {
             const m = exercicio.marcadores[i];
@@ -143,7 +157,15 @@ function VerTocar({
           aoMudarContagem={setContagem}
           compacta
           extra={
-            exercicio.clique && temSequencia ? (
+            temGrau ? (
+              <button
+                className="btn"
+                onClick={() => setRotulo(rotulo === 'grau' ? 'nota' : 'grau')}
+                aria-label={rotulo === 'grau' ? 'Mostrar notas' : 'Mostrar graus'}
+              >
+                {rotulo === 'grau' ? 'Graus' : 'Notas'}
+              </button>
+            ) : exercicio.clique && temSequencia ? (
               <button
                 className="btn"
                 aria-pressed={comNotas}

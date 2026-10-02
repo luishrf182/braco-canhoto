@@ -1,0 +1,154 @@
+.tela {
+  height: 100dvh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-3) calc(var(--space-3) + env(safe-area-inset-bottom));
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.topo {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.icone {
+  width: 24px;
+  height: 24px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+.titulo {
+  flex: 1;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.texto {
+  flex: none;
+  font-size: 20px;
+  line-height: 1.4;
+  max-width: 640px;
+}
+
+.exemplo {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.cabecalhoExemplo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.cifra {
+  font-size: 22px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.chips {
+  display: flex;
+  gap: var(--space-2);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.chip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 44px;
+  padding: 2px var(--space-2);
+  border-radius: 8px;
+  border: 2px solid var(--line);
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.chip strong {
+  font-size: 17px;
+  color: var(--text);
+}
+
+.chip[data-papel='fundamental'] {
+  border-color: var(--role-root);
+  border-radius: 4px;
+}
+.chip[data-papel='3'] {
+  border-color: var(--role-3);
+}
+.chip[data-papel='5'] {
+  border-color: var(--role-5);
+}
+.chip[data-papel='7'] {
+  border-color: var(--role-7);
+}
+
+.braco {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.rodape {
+  flex: none;
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.rodape :global(.btn) {
+  min-width: 120px;
+  min-height: 52px;
+}
+
+@media (orientation: landscape) and (max-height: 500px) {
+  .tela {
+    gap: var(--space-1);
+    padding-top: var(--space-1);
+  }
+  .texto {
+    font-size: 16px;
+  }
+  .cifra {
+    font-size: 18px;
+  }
+  .rodape :global(.btn) {
+    min-height: 44px;
+  }
+}
+
+.meio {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.rodape :global(.btn) {
+  min-width: 0;
+}
+
+@media (max-width: 420px) {
+  .rodape :global(.btn) {
+    padding: 0 var(--space-2);
+  }
+}

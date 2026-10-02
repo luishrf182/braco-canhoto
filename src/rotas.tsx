@@ -7,6 +7,7 @@ import { Ajustes } from './telas/Ajustes';
 import { Calibracao } from './telas/Calibracao';
 import { Explorar } from './telas/Explorar';
 import { Exercicio } from './telas/Exercicio';
+import { Licao } from './telas/Licao';
 import { Trilha } from './telas/Trilha';
 
 function ExigeCalibracao({ children }: { children: ReactNode }) {
@@ -25,6 +26,9 @@ export function Rotas() {
         </Route>
         <Route path="/exercicio/:modelo/:tom?/:forma?">
           <Exercicio />
+        </Route>
+        <Route path="/licao/:modulo/:licao">
+          <Licao />
         </Route>
         <Route path="/hoje">
           <Moldura>

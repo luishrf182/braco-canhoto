@@ -3,7 +3,8 @@ import type { ClasseNota, Corda } from '../teoria/notas';
 
 export type Formato = 'ver-tocar' | 'quiz-braco' | 'identificacao' | 'progressao' | 'ouca-repita';
 export type Levada = 'nenhuma' | 'balada' | 'pop' | 'groove' | 'rock';
-export type FormaCaged = 'C' | 'A' | 'G' | 'E' | 'D';
+import type { FormaCaged } from '../teoria/voicings';
+export type { FormaCaged };
 
 export interface ConfigBpm {
   inicial: number;
@@ -50,6 +51,14 @@ export type PerguntaQuiz =
       /** Restringe a uma corda (opcional). */
       corda?: Corda;
       faixa: [number, number];
+    }
+  | {
+      tipo: 'marcar-grau';
+      texto: string;
+      marcadores: Marcador[];
+      /** Índices (em marcadores) das respostas certas. */
+      certos: number[];
+      faixa: [number, number];
     };
 
 export interface CartaIdentificacao {
@@ -59,6 +68,7 @@ export interface CartaIdentificacao {
   /** Marcadores/sons opcionais para ilustrar a resposta ao revelar. */
   marcadores?: Marcador[];
   midi?: number[];
+  faixa?: [number, number];
 }
 
 export interface PassoProgressao {

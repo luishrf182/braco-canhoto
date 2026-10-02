@@ -99,6 +99,73 @@ teste('F3: modo TV mostra "pense e revele"', async (nav) => {
   afirmar(marcadores > 0, 'revelar não mostrou posições');
 });
 
+// ---------------------------------------------------------------- F4
+teste('F4: trilha do Módulo 1 de ponta a ponta', async (nav) => {
+  const p = await novaPagina(nav, {}, { width: 390, height: 844 });
+  await p.goto(BASE + '#/trilha');
+  // Lição completa.
+  await p.getByRole('link', { name: /Fórmula 1-3-5-7/ }).click();
+  await p.waitForSelector('text=Tétrade é um acorde de quatro notas');
+  await p.getByRole('button', { name: 'Próxima' }).click();
+  await p.getByRole('button', { name: 'Próxima' }).click();
+  await p.getByRole('button', { name: 'Concluir' }).click();
+  await p.waitForSelector('h1:has-text("Trilha")');
+  // Exercício ver-tocar na forma de E.
+  await p.getByRole('link', { name: 'Tétrade 7M, forma de E' }).click();
+  await p.waitForSelector('text=C7M · forma de E · abertura 2');
+  await p.keyboard.press('1');
+  await p.waitForSelector('text=Salvo.');
+  await p.getByRole('button', { name: 'Sair do exercício' }).click();
+  // Cartas: responde as 6 e avalia.
+  await p.getByRole('link', { name: 'Que acorde é este?' }).click();
+  for (let i = 0; i < 6; i++) {
+    await p.getByRole('group', { name: 'Opções' }).getByRole('button').first().click();
+    await p.waitForTimeout(1700);
+  }
+  await p.waitForSelector('text=certas');
+  await p.keyboard.press('2');
+  await p.waitForSelector('text=Salvo.');
+  // "Onde está a 7ª?": toca os marcadores certos lendo o grau revelado depois.
+  await p.getByRole('button', { name: 'Sair do exercício' }).click();
+  await p.getByRole('link', { name: 'Onde está a 7ª?' }).click();
+  await p.locator('svg g[role="button"]').first().waitFor();
+  const prog = await lerProgresso(p);
+  afirmar(prog.itens['tetrade-7M|C|E']?.caixa === 2, 'tétrade não gravada');
+  afirmar(
+    prog.itens['tetrade-identificar|C|-']?.ultimaAvaliacao === 'quase',
+    'cartas não gravadas',
+  );
+  afirmar(p.erros.length === 0, p.erros.join(' | '));
+});
+
+teste('F4: checkpoint completo aparece na trilha', async (nav) => {
+  const itens = {};
+  for (const m of ['tetrade-7M', 'tetrade-7', 'tetrade-m7', 'tetrade-m7b5', 'tetrade-dim'])
+    for (const f of ['E', 'A'])
+      for (const t of ['C', 'G'])
+        itens[`${m}|${t}|${f}`] = {
+          caixa: 2,
+          ultimaAvaliacao: 'limpo',
+          proximaRevisao: '2030-01-01',
+          atualizadoEm: '2026-01-01T00:00:00Z',
+          limpos: 1,
+        };
+  const ctx = await nav.newContext({ viewport: { width: 1280, height: 720 } });
+  await ctx.addInitScript((i) => {
+    localStorage.setItem(
+      'braco-canhoto:progresso',
+      JSON.stringify({
+        schemaVersion: 1,
+        ajustes: { calibrado: true, diagnosticoVisto: true },
+        itens: i,
+      }),
+    );
+  }, itens);
+  const p = await ctx.newPage();
+  await p.goto(BASE + '#/trilha');
+  await p.waitForSelector('text=Checkpoint concluído');
+});
+
 // ----------------------------------------------------------------
 try {
   for (let i = 0; i < 60; i++) {
