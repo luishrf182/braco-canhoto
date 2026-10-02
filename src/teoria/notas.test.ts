@@ -72,3 +72,11 @@ describe('TONS', () => {
     expect(new Set(TONS.map(croma)).size).toBe(12);
   });
 });
+
+describe('formatarTexto', () => {
+  it('formata marcas de nota', async () => {
+    const { formatarTexto } = await import('./notas');
+    expect(formatarTexto('Toque um {n:F#} e um {n:Bb}')).toBe('Toque um F♯ e um B♭');
+    expect(formatarTexto('Oitavas de {n:C}', 'do-re-mi')).toBe('Oitavas de Dó');
+  });
+});

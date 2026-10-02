@@ -1,0 +1,142 @@
+[
+  {
+    "tela": "quiz-nome",
+    "resolucao": "360x640",
+    "tema": "claro",
+    "ok": true,
+    "rolagemH": false,
+    "rolagemV": false,
+    "pequenos": [],
+    "erros": []
+  },
+  {
+    "tela": "quiz-nome",
+    "resolucao": "390x844",
+    "tema": "claro",
+    "ok": true,
+    "rolagemH": false,
+    "rolagemV": false,
+    "pequenos": [],
+    "erros": []
+  },
+  {
+    "tela": "quiz-nome",
+    "resolucao": "390x844",
+    "tema": "escuro",
+    "ok": true,
+    "rolagemH": false,
+    "rolagemV": false,
+    "pequenos": [],
+    "erros": []
+  },
+  {
+    "tela": "quiz-nome",
+    "resolucao": "844x390",
+    "tema": "claro",
+    "ok": true,
+    "rolagemH": false,
+    "rolagemV": false,
+    "pequenos": [],
+    "erros": []
+  },
+  {
+    "tela": "quiz-nome",
+    "resolucao": "768x1024",
+    "tema": "claro",
+    "ok": true,
+    "rolagemH": false,
+    "rolagemV": false,
+    "pequenos": [],
+    "erros": []
+  },
+  {
+    "tela": "quiz-nome",
+    "resolucao": "1280x720",
+    "tema": "claro",
+    "ok": true,
+    "rolagemH": false,
+    "rolagemV": false,
+    "pequenos": [],
+    "erros": []
+  },
+  {
+    "tela": "quiz-nome",
+    "resolucao": "1280x720",
+    "tema": "escuro",
+    "ok": true,
+    "rolagemH": false,
+    "rolagemV": false,
+    "pequenos": [],
+    "erros": []
+  },
+  {
+    "tela": "todas-notas",
+    "resolucao": "360x640",
+    "tema": "claro",
+    "ok": true,
+    "rolagemH": false,
+    "rolagemV": false,
+    "pequenos": [],
+    "erros": []
+  },
+  {
+    "tela": "todas-notas",
+    "resolucao": "390x844",
+    "tema": "claro",
+    "ok": true,
+    "rolagemH": false,
+    "rolagemV": false,
+    "pequenos": [],
+    "erros": []
+  },
+  {
+    "tela": "todas-notas",
+    "resolucao": "390x844",
+    "tema": "escuro",
+    "ok": true,
+    "rolagemH": false,
+    "rolagemV": false,
+    "pequenos": [],
+    "erros": []
+  },
+  {
+    "tela": "todas-notas",
+    "resolucao": "844x390",
+    "tema": "claro",
+    "ok": true,
+    "rolagemH": false,
+    "rolagemV": false,
+    "pequenos": [],
+    "erros": []
+  },
+  {
+    "tela": "todas-notas",
+    "resolucao": "768x1024",
+    "tema": "claro",
+    "ok": true,
+    "rolagemH": false,
+    "rolagemV": false,
+    "pequenos": [],
+    "erros": []
+  },
+  {
+    "tela": "todas-notas",
+    "resolucao": "1280x720",
+    "tema": "claro",
+    "ok": true,
+    "rolagemH": false,
+    "rolagemV": false,
+    "pequenos": [],
+    "erros": []
+  },
+  {
+    "tela": "todas-notas",
+    "resolucao": "1280x720",
+    "tema": "escuro",
+    "ok": true,
+    "rolagemH": false,
+    "rolagemV": false,
+    "pequenos": [],
+    "erros": []
+  }
+]

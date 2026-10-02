@@ -6,7 +6,8 @@ import { Hoje } from './telas/Hoje';
 import { Ajustes } from './telas/Ajustes';
 import { Calibracao } from './telas/Calibracao';
 import { Explorar } from './telas/Explorar';
-import { EmBreve } from './telas/EmBreve';
+import { Exercicio } from './telas/Exercicio';
+import { Trilha } from './telas/Trilha';
 
 function ExigeCalibracao({ children }: { children: ReactNode }) {
   const { ajustes } = useProgresso();
@@ -22,6 +23,9 @@ export function Rotas() {
         <Route path="/calibracao">
           <Calibracao />
         </Route>
+        <Route path="/exercicio/:modelo/:tom?/:forma?">
+          <Exercicio />
+        </Route>
         <Route path="/hoje">
           <Moldura>
             <Hoje />
@@ -29,7 +33,7 @@ export function Rotas() {
         </Route>
         <Route path="/trilha">
           <Moldura>
-            <EmBreve titulo="Trilha" />
+            <Trilha />
           </Moldura>
         </Route>
         <Route path="/explorar">

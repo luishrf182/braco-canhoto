@@ -13,7 +13,9 @@
     "format": "prettier --write .",
     "guarda": "node scripts/guarda-arquivos.mjs",
     "qa": "npm run guarda && npm run lint && npm run typecheck && npm run test && npm run build",
-    "e2e:telas": "node e2e/auditoria.mjs"
+    "e2e:telas": "node e2e/auditoria.mjs",
+    "e2e:fluxos": "node e2e/fluxos.mjs",
+    "e2e:audio": "node e2e/audio.mjs"
   },
   "dependencies": {
     "react": "^18.3.1",

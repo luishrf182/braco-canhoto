@@ -1,0 +1,65 @@
+.avaliacao {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-2);
+  width: 100%;
+}
+
+.botao {
+  min-height: 56px;
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  background: var(--surface);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  padding: var(--space-1) var(--space-2);
+}
+
+.botao:hover:not(:disabled) {
+  border-color: var(--muted);
+}
+
+.rotulo {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.dica {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.dica kbd {
+  font: inherit;
+  font-weight: 600;
+  padding: 0 4px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+}
+
+.limpo .rotulo {
+  color: var(--ok);
+}
+
+.travou .rotulo {
+  color: var(--err);
+}
+
+.sugerida {
+  border-color: var(--accent);
+  box-shadow: inset 0 0 0 2px var(--accent);
+}
+
+@media (max-height: 500px) {
+  .botao {
+    min-height: 56px;
+    flex-direction: row;
+    gap: var(--space-2);
+  }
+  .dica {
+    display: none;
+  }
+}

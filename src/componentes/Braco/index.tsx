@@ -1,25 +1,13 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useProgresso } from '../../estado/progresso';
 import { CASA_MAX, CORDAS, formatarNota, notaNa, type Corda } from '../../teoria/notas';
+import type { Marcador, Papel } from '../../teoria/marcador';
+
+export type { Marcador, Papel };
 import { useCompacto } from './useCompacto';
 import css from './Braco.module.css';
 
-export type Papel = 'fundamental' | '3' | '5' | '7' | 'extensao' | 'escala';
 export type ModoRotulo = 'nota' | 'grau' | 'intervalo' | 'dedo' | 'nenhum';
-
-export interface Marcador {
-  corda: Corda;
-  casa: number;
-  papel: Papel;
-  fantasma?: boolean;
-  /** Nome da nota no contexto (ex.: 'Bb' num acorde de F). Sem ele, usa o nome com sustenido. */
-  nota?: string;
-  grau?: string;
-  intervalo?: string;
-  dedo?: number;
-  /** Desenha o marcador sem rótulo (quiz "que nota é esta?"). */
-  semRotulo?: boolean;
-}
 
 export interface MarcaRetorno {
   corda: Corda;

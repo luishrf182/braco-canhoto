@@ -12,7 +12,7 @@ Repositório: https://github.com/luishrf182/braco-canhoto
 | F0 — Esqueleto publicado | concluída |
 | F1 — Braço + Calibração + Explorar | concluída |
 | F2 — Áudio base | concluída |
-| F3 — Player + Mapa do braço | pendente |
+| F3 — Player + Mapa do braço | concluída |
 | F4 — Módulo 1: Tétrades | pendente |
 | F5 — Agenda + Sessão do dia | pendente |
 | F6 — Sincronização via Gist | pendente |
@@ -83,3 +83,25 @@ Repositório: https://github.com/luishrf182/braco-canhoto
 
 **Pendências**
 - "O BPM muda sem estalo" e "o ponto aceso coincide com o som" precisam de conferência auditiva no celular (vai para o roteiro de `ENTREGA.md`).
+
+## F3 — Player de exercício + Mapa do braço
+
+**Feito**
+- Módulos puros: `exercicios/tipos.ts` (ModeloExercicio, ExercicioConcreto), `exercicios/aleatorio.ts` (sorteio com semente), `exercicios/mapa.ts` (quiz de nome do ponto, quiz de tocar a nota, todas as notas X, oitavas), registro de geradores em `exercicios/index.ts`, `teoria/oitavas.ts`, `agenda/caixas.ts` (regras Limpo/Quase/Travou e BPM +4/−8), `agenda/tons.ts` (sorteio ponderado).
+- `PlayerExercicio`: tela única sem rolagem (instrução + braço + controles + avaliação), formatos `quiz-braco` e `ver-tocar`. Paisagem baixa: controles e avaliação lado a lado.
+- `Avaliacao`: Limpo/Quase/Travou (≥ 56 px), teclas 1/2/3, Enter aceita a sugestão do quiz.
+- Quiz: 8 perguntas, retorno certo/errado, toca a nota se o som já estiver ativo, placar e tempo médio, avaliação sugerida (≥ 7/8 e ≤ 4 s = Limpo; ≥ 5/8 = Quase).
+- Modo TV ("pense e revele"): em Ajustes; os quizzes viram Revelar → Próxima.
+- Tela Exercício avulsa (`/#/exercicio/:modelo/:tom?/:forma?`) com "Salvo · revisão em N dias · próximo BPM", Repetir e Próximo (Enter). Conteúdo novo fica em C até o primeiro Limpo; depois sorteia o tom.
+- Trilha com o treino Mapa do braço (6 exercícios) e status por exercício.
+- `e2e/fluxos.mjs`: avaliação grava o item (caixa, BPM, melhor BPM), atalhos, quiz completo e pense e revele.
+
+**Decisões autônomas**
+- `ItemProgresso` ganhou campos opcionais `bpm` (BPM de trabalho), `vezes` e `limpos`. É compatível com o modelo do blueprint.
+- O primeiro Limpo de um item novo já o leva para a caixa 2 (revisão em 3 dias): item novo conta como caixa 1.
+- Padrões de oitava: o motor gera os 7 pares de oitava da afinação padrão (6→4, 5→3, 4→2, 3→1, 6→3, 5→2, 4→1). O blueprint fala em 6; a lista fica para revisão do Luís.
+- Instruções usam marcas `{n:Bb}`, formatadas na tela conforme "letras" ou "Dó-Ré-Mi".
+- Os testes de fluxo e de áudio (Playwright) rodam localmente como portão; o CI roda guarda, lint, tipos, testes unitários e build.
+
+**Pendências**
+- Nenhuma.

@@ -8,9 +8,13 @@ export interface ItemProgresso {
   caixa: Caixa;
   ultimaAvaliacao: Avaliacao;
   melhorBpm?: number;
+  /** BPM de trabalho para a próxima vez (já ajustado: +4 Limpo, −8 Travou). */
+  bpm?: number;
   /** Data ISO (AAAA-MM-DD) da próxima revisão. */
   proximaRevisao: string;
   atualizadoEm: string;
+  vezes?: number;
+  limpos?: number;
 }
 
 export interface Ajustes {

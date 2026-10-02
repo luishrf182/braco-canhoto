@@ -1,0 +1,195 @@
+/* Tela de exercício: SEM rolagem em nenhuma resolução de referência. */
+.tela {
+  height: 100dvh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3) calc(var(--space-3) + env(safe-area-inset-bottom));
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.topo {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 44px;
+}
+
+.icone {
+  width: 24px;
+  height: 24px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+.titulo {
+  flex: 1;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.instrucao {
+  flex: none;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.25;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.contador {
+  position: absolute;
+  top: var(--space-3);
+  right: var(--space-3);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.areaBraco {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.controles {
+  flex: none;
+}
+
+.rodape {
+  flex: none;
+}
+
+.notas {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: var(--space-1);
+}
+
+.nota {
+  min-height: 48px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  font-size: 18px;
+  font-weight: 600;
+  padding: 0;
+}
+
+.certa {
+  background: var(--ok);
+  border-color: var(--ok);
+  color: #fff;
+}
+
+.errada {
+  background: var(--err);
+  border-color: var(--err);
+  color: #fff;
+}
+
+.revelar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  min-height: 56px;
+}
+
+.resposta {
+  font-size: 40px;
+  font-weight: 700;
+}
+
+.resumoQuiz {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.placar {
+  font-size: 28px;
+  font-weight: 600;
+}
+
+.placar :global(.num) {
+  font-size: 56px;
+}
+
+.tela {
+  position: relative;
+}
+
+@media (min-width: 700px) {
+  .notas {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+}
+
+/* Paisagem baixa (celular deitado): controles e avaliação lado a lado. */
+@media (orientation: landscape) and (max-height: 500px) {
+  .tela {
+    display: grid;
+    grid-template-columns: 1fr minmax(240px, 300px);
+    grid-template-rows: auto auto 1fr auto;
+    column-gap: var(--space-3);
+    row-gap: var(--space-1);
+    padding-top: var(--space-1);
+  }
+  .topo {
+    grid-column: 1 / -1;
+    min-height: 40px;
+  }
+  .instrucao {
+    grid-column: 1 / -1;
+    font-size: 17px;
+  }
+  .areaBraco {
+    grid-column: 1 / -1;
+  }
+  .controles {
+    grid-column: 1;
+    align-self: center;
+  }
+  .rodape {
+    grid-column: 2;
+    align-self: center;
+  }
+  .rodape:empty {
+    display: none;
+  }
+  .tela:has(.rodape:empty) .controles {
+    grid-column: 1 / -1;
+  }
+  .instrucao {
+    -webkit-line-clamp: 1;
+  }
+  .nota {
+    min-height: 44px;
+    font-size: 16px;
+  }
+}
+
+@media (min-width: 1100px) and (min-height: 700px) {
+  .instrucao {
+    font-size: 26px;
+  }
+  .tela {
+    padding: var(--space-4) var(--space-5);
+    gap: var(--space-3);
+  }
+}

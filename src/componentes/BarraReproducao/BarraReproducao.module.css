@@ -85,3 +85,19 @@
     height: 56px;
   }
 }
+
+@media (orientation: landscape) and (max-height: 500px) {
+  .compacta {
+    flex-wrap: nowrap;
+  }
+  .compacta .valor {
+    min-width: 52px;
+  }
+  .compacta .bpm :global(.btn) {
+    width: 44px;
+    height: 44px;
+  }
+  .compacta > :global(.btn) {
+    padding: 0 var(--space-2);
+  }
+}

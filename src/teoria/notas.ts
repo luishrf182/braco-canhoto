@@ -90,3 +90,8 @@ export function nomeSimples(c: number, preferirBemol = false): ClasseNota {
   const bem = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B'];
   return (preferirBemol ? bem : sus)[((c % 12) + 12) % 12]!;
 }
+
+/** Troca marcas `{n:Bb}` num texto pelo nome formatado da nota. */
+export function formatarTexto(texto: string, sistema: 'letras' | 'do-re-mi' = 'letras'): string {
+  return texto.replace(/\{n:([A-G][#b]*)\}/g, (_, n: string) => formatarNota(n, sistema));
+}
