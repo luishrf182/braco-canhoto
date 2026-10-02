@@ -1,0 +1,57 @@
+:root {
+  /* Superfícies — claro */
+  --bg: #fafaf7;
+  --surface: #ffffff;
+  --line: #e4e4e0;
+  --text: #1c1c1e;
+  --muted: #6b6b70;
+  --accent: #c98200; /* âmbar — único destaque */
+  --accent-text: #8a5900; /* âmbar para texto: AA sobre --bg */
+  --on-accent: #1c1c1e;
+  /* Funções da nota (paleta Okabe-Ito, segura para daltonismo) */
+  --role-root: #d55e00; /* fundamental — também QUADRADA */
+  --role-3: #0072b2;
+  --role-5: #009e73;
+  --role-7: #cc79a7;
+  --role-ext: #56b4e9;
+  --role-scale: var(--muted); /* nota de escala "fantasma": contorno */
+  --on-role: #ffffff;
+  /* Braço */
+  --fret: #cfcfc9;
+  --nut: #9a9a94;
+  --string: #9a9a94;
+  --inlay: #e4e4e0;
+  /* Estados */
+  --ok: #007a55;
+  --warn: #9a5b00;
+  --err: #b3261e;
+  /* Espaço e forma */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 16px;
+  --space-4: 24px;
+  --space-5: 40px;
+  --radius: 12px;
+  --nav-h: 56px;
+  --nav-w: 76px;
+  color-scheme: light;
+}
+
+[data-theme='dark'] {
+  --bg: #121212;
+  --surface: #1c1c1e;
+  --line: #2c2c2e;
+  --text: #f2f2f0;
+  --muted: #a0a0a6;
+  --accent: #f5a524;
+  --accent-text: #f5a524;
+  --on-accent: #121212;
+  --fret: #3a3a3c;
+  --nut: #6e6e73;
+  --string: #6e6e73;
+  --inlay: #2c2c2e;
+  --ok: #4cc38a;
+  --warn: #f5a524;
+  --err: #ff8a80;
+  color-scheme: dark;
+}

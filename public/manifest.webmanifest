@@ -1,0 +1,11 @@
+{
+  "name": "Braço Canhoto",
+  "short_name": "Braço Canhoto",
+  "description": "Estudo de guitarra para canhoto.",
+  "start_url": "./#/",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#FAFAF7",
+  "theme_color": "#FAFAF7",
+  "icons": [{ "src": "icone.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }]
+}

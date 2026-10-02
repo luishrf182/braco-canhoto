@@ -1,0 +1,20 @@
+node_modules/
+dist/
+coverage/
+test-results/
+playwright-report/
+*.log
+.DS_Store
+desktop.ini
+
+# Material de estudo de terceiros: nunca versionar (repo público)
+referencias/
+
+# Mídia e arquivos compactados de terceiros
+*.pdf
+*.mp3
+*.wav
+*.zip
+
+# Estado local do Claude Code
+.claude/settings.local.json
