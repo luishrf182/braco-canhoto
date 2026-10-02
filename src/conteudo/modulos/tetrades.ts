@@ -181,6 +181,17 @@ export const TETRADES: Modulo = {
       minutos: 2,
     },
     {
+      id: 'tetrade-progressao',
+      titulo: 'IIm7 – V7 – I7M em duas regiões',
+      formato: 'progressao',
+      gerador: 'progressaoRegioes',
+      params: { graus: ['IIm', 'V', 'I', 'I'], centros: [4, 9] },
+      bpm: { inicial: 70, passo: 4, recuo: 8, minimo: 50 },
+      levada: 'balada',
+      usaTom: true,
+      minutos: 3,
+    },
+    {
       id: 'tetrade-onde-3',
       titulo: 'Onde está a 3ª?',
       formato: 'quiz-braco',
@@ -191,9 +202,13 @@ export const TETRADES: Modulo = {
     },
   ],
   checkpoint: {
-    modelos: ['tetrade-7M', 'tetrade-7', 'tetrade-m7', 'tetrade-m7b5', 'tetrade-dim'],
-    formas: ['E', 'A'],
-    minimoLimpos: 2,
+    requisitos: [
+      {
+        modelos: ['tetrade-7M', 'tetrade-7', 'tetrade-m7', 'tetrade-m7b5', 'tetrade-dim'],
+        formas: ['E', 'A'],
+        minimoLimpos: 2,
+      },
+    ],
     descricao: '5 qualidades nas formas de E e A, com Limpo em pelo menos 2 tons.',
   },
 };

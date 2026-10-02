@@ -9,6 +9,7 @@ import { Avaliacao } from '../Avaliacao';
 import { BarraReproducao } from '../BarraReproducao';
 import { Braco } from '../Braco';
 import { Cartas } from './Cartas';
+import { Progressao } from './Progressao';
 import { QuizBraco, type ResultadoQuiz } from './QuizBraco';
 import css from './PlayerExercicio.module.css';
 
@@ -79,6 +80,8 @@ export function PlayerExercicio({
           aoTerminar={setResultadoQuiz}
           aoMudarInstrucao={setInstrucaoQuiz}
         />
+      ) : exercicio.formato === 'progressao' && exercicio.progressao ? (
+        <Progressao exercicio={exercicio} bpm={bpm} setBpm={setBpm} />
       ) : ehQuiz && exercicio.quiz ? (
         <QuizBraco
           key={exercicio.chave + exercicio.quiz.length}

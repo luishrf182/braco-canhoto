@@ -74,8 +74,12 @@ export interface CartaIdentificacao {
 export interface PassoProgressao {
   cifra: string;
   grau: string;
+  /** Notas do voicing (pad). */
   midi: number[];
+  /** Nota do baixo. */
+  baixo: number;
   marcadores: Marcador[];
+  faixa: [number, number];
   /** Tempos por acorde. */
   tempos: number;
 }

@@ -2,6 +2,7 @@ import type { ModeloExercicio } from '../exercicios/tipos';
 import type { Funcao, Qualidade } from '../teoria/acordes';
 import type { Abertura, FormaCaged } from '../teoria/voicings';
 import type { ModuloId } from '../tipos';
+import type { Requisito } from '../agenda/checkpoint';
 
 /** Exemplo musical de uma tela de conceito. Os dados vêm sempre do motor. */
 export type ExemploConceito =
@@ -32,11 +33,7 @@ export interface Licao {
 }
 
 export interface Checkpoint {
-  modelos: string[];
-  /** Formas exigidas (vazio = qualquer). */
-  formas?: FormaCaged[];
-  /** Tons distintos com "Limpo" exigidos por modelo × forma. */
-  minimoLimpos: number;
+  requisitos: Requisito[];
   descricao: string;
 }
 

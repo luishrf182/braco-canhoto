@@ -1,5 +1,6 @@
 import type { ModeloExercicio } from '../exercicios/tipos';
 import type { ModuloId } from '../tipos';
+import { CAMPO_MAIOR } from './modulos/campo-maior';
 import { TETRADES } from './modulos/tetrades';
 import type { Licao, Modulo } from './tipos';
 import { MAPA_DO_BRACO } from './treinos/mapa';
@@ -11,7 +12,7 @@ export interface Treino {
   modelos: ModeloExercicio[];
 }
 
-export const MODULOS: Modulo[] = [TETRADES];
+export const MODULOS: Modulo[] = [TETRADES, CAMPO_MAIOR];
 
 export const TREINOS: Treino[] = [
   {

@@ -77,6 +77,33 @@ try {
   void estado;
   await p.getByRole('button', { name: 'Parar' }).click();
 
+  // Base sintetizada (F7): cadência com bateria, pad e baixo; o acorde atual avança.
+  await p.goto(BASE + '#/exercicio/cadencia-1');
+  await p.getByRole('button', { name: 'Contar' }).click();
+  for (let i = 0; i < 10; i++) await p.getByRole('button', { name: 'Aumentar BPM' }).click();
+  await p.getByRole('button', { name: 'Tocar' }).click();
+  await p.waitForFunction(() => document.querySelector('[aria-label="Parar"]'), null, {
+    timeout: 10000,
+  });
+  const acordesVistos = new Set();
+  for (let i = 0; i < 40; i++) {
+    const atual = await p.evaluate(
+      () => document.querySelector('[aria-current="step"] strong')?.textContent,
+    );
+    if (atual) acordesVistos.add(atual);
+    await p.waitForTimeout(150);
+  }
+  if (acordesVistos.size < 3)
+    falhar(`base: acorde atual não avançou (${[...acordesVistos].join(', ')})`);
+  else
+    console.log(
+      `✅ base tocou e destacou ${acordesVistos.size} acordes (${[...acordesVistos].join(' ')})`,
+    );
+  // Trocar a levada durante a execução não quebra.
+  await p.locator('select').selectOption('rock');
+  await p.waitForTimeout(800);
+  await p.getByRole('button', { name: 'Parar' }).click();
+
   const relevantes = erros.filter((e) => !/AudioContext was not allowed/i.test(e));
   if (relevantes.length) falhar('erros: ' + relevantes.join(' | '));
   else console.log('✅ sem erros de console');

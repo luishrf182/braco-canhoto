@@ -2,7 +2,7 @@ import { Chord, Interval, Note } from 'tonal';
 import { croma, type ClasseNota } from './notas';
 import type { Papel } from './marcador';
 
-export type Qualidade = '7M' | '7' | 'm7' | 'm7(b5)' | '°' | '' | 'm';
+export type Qualidade = '7M' | '7' | 'm7' | 'm7(b5)' | '°' | '' | 'm' | 'm(b5)';
 
 export const QUALIDADES_TETRADE: Qualidade[] = ['7M', '7', 'm7', 'm7(b5)', '°'];
 
@@ -14,6 +14,7 @@ const TIPO_TONAL: Record<Qualidade, string> = {
   '°': 'dim7',
   '': 'M',
   m: 'm',
+  'm(b5)': 'dim',
 };
 
 /** Grau dentro do acorde, como aparece nos rótulos: T, 3, b3, 5, b5, 7M, 7, bb7. */

@@ -44,6 +44,11 @@ export function LicaoConteudo({ moduloId, licaoId, aoConcluir, aoSair, posicao }
 
   const tela = licao?.telas[pagina];
   const dados = useMemo(() => (tela?.exemplo ? exemploMusical(tela.exemplo) : null), [tela]);
+  const [passoSel, setPassoSel] = useState(0);
+  // Exemplos com vários acordes: o braço mostra o acorde que soa (ou o escolhido).
+  const passos = dados?.passos;
+  const indicePasso = passos ? (tocandoAgora >= 0 ? tocandoAgora : passoSel) : 0;
+  const passo = passos?.[indicePasso];
 
   if (!modulo || !licao || !tela) {
     return (
@@ -59,6 +64,7 @@ export function LicaoConteudo({ moduloId, licaoId, aoConcluir, aoSair, posicao }
   const ultima = pagina === licao.telas.length - 1;
   const irPara = (p: number) => {
     audio.parar();
+    setPassoSel(0);
     setPagina(p);
   };
   const sair = () => {
@@ -104,7 +110,25 @@ export function LicaoConteudo({ moduloId, licaoId, aoConcluir, aoSair, posicao }
       {dados && (
         <div className={css.exemplo}>
           <div className={css.cabecalhoExemplo}>
-            <span className={css.cifra}>{dados.titulo}</span>
+            <span className={css.cifra}>{formatarTexto(dados.titulo, ajustes.nomesNotas)}</span>
+            {passos && (
+              <div className={css.acordes} role="group" aria-label="Acordes">
+                {passos.map((p, i) => (
+                  <button
+                    key={p.grau + i}
+                    className={css.acorde}
+                    aria-pressed={i === indicePasso}
+                    onClick={() => {
+                      setPassoSel(i);
+                      void audio.iniciar().then(() => audio.tocarNota(p.midi, 1.5));
+                    }}
+                  >
+                    <strong>{p.cifra}</strong>
+                    <span>{p.grau}</span>
+                  </button>
+                ))}
+              </div>
+            )}
             {dados.chips.length > 0 && (
               <ul className={css.chips} aria-label="Notas do acorde">
                 {dados.chips.map((c) => (
@@ -118,13 +142,22 @@ export function LicaoConteudo({ moduloId, licaoId, aoConcluir, aoSair, posicao }
           </div>
           <div className={css.braco}>
             <Braco
-              marcadores={dados.marcadores}
-              {...(dados.faixa ? { faixa: dados.faixa } : {})}
+              marcadores={passo?.marcadores ?? dados.marcadores}
+              {...(passo
+                ? {
+                    faixa: [Math.max(0, passo.faixa[0] - 1), passo.faixa[0] + 4] as [
+                      number,
+                      number,
+                    ],
+                  }
+                : dados.faixa
+                  ? { faixa: dados.faixa }
+                  : {})}
               {...(dados.sombra ? { sombra: dados.sombra } : {})}
               rotulo={rotulo}
-              tocandoAgora={tocandoAgora >= 0 ? tocandoAgora : null}
+              tocandoAgora={!passos && tocandoAgora >= 0 ? tocandoAgora : null}
               aoTocarMarcador={(i) => {
-                const m = dados.marcadores[i];
+                const m = (passo?.marcadores ?? dados.marcadores)[i];
                 if (m?.midi !== undefined)
                   void audio.iniciar().then(() => audio.tocarNota(m.midi!));
               }}

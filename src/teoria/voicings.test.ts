@@ -129,3 +129,18 @@ describe('omissão e região', () => {
     expect(voicing('G', '7M', 'E', { casaMin: 6 }).faixa[0]).toBe(3);
   });
 });
+
+describe('voicingNaRegiao', () => {
+  it('fica perto da casa pedida, nas duas regiões', async () => {
+    const { voicingNaRegiao } = await import('./voicings');
+    for (const t of TONS) {
+      for (const q of QUALIDADES_TETRADE) {
+        for (const centro of [4, 5, 9, 10]) {
+          const v = voicingNaRegiao(t, q, centro);
+          const meio = (v.faixa[0] + v.faixa[1]) / 2;
+          expect(Math.abs(meio - centro), `${t}${q} perto de ${centro}`).toBeLessThanOrEqual(4);
+        }
+      }
+    }
+  });
+});

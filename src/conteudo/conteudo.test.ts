@@ -48,6 +48,7 @@ describe('conteúdo', () => {
   it('checkpoint aponta para modelos que existem', () => {
     const ids = new Set(todosModelos().map((m) => m.id));
     for (const m of MODULOS)
-      for (const id of m.checkpoint.modelos) expect(ids.has(id), id).toBe(true);
+      for (const id of m.checkpoint.requisitos.flatMap((r) => r.modelos))
+        expect(ids.has(id), id).toBe(true);
   });
 });

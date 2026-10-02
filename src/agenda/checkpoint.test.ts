@@ -11,7 +11,7 @@ const limpo = (limpos = 1): ItemProgresso => ({
 });
 
 describe('statusCheckpoint', () => {
-  const def = { modelos: ['a', 'b'], formas: ['E', 'A'], minimoLimpos: 2 };
+  const def = { requisitos: [{ modelos: ['a', 'b'], formas: ['E', 'A'], minimoLimpos: 2 }] };
 
   it('conta tons distintos com Limpo por modelo × forma', () => {
     const s = statusCheckpoint(def, {
@@ -37,7 +37,30 @@ describe('statusCheckpoint', () => {
   });
 
   it('sem formas, conta por modelo', () => {
-    const s = statusCheckpoint({ modelos: ['x'], minimoLimpos: 1 }, { 'x|C|-': limpo() });
+    const s = statusCheckpoint(
+      { requisitos: [{ modelos: ['x'], minimoLimpos: 1 }] },
+      { 'x|C|-': limpo() },
+    );
     expect(s.completo).toBe(true);
+  });
+
+  it('minimoModelos: basta parte dos modelos (4 de 8 cadências)', () => {
+    const cad = Array.from({ length: 8 }, (_, i) => 'cad' + i);
+    const def2 = {
+      requisitos: [
+        { modelos: ['campo'], minimoLimpos: 4 },
+        { modelos: cad, minimoLimpos: 1, minimoModelos: 4 },
+      ],
+    };
+    const itens: Record<string, ItemProgresso> = {};
+    for (const t of ['C', 'G', 'D', 'A']) itens['campo|' + t + '|-'] = limpo();
+    for (const c of cad.slice(0, 3)) itens[c + '|C|-'] = limpo();
+    expect(statusCheckpoint(def2, itens)).toMatchObject({
+      total: 5,
+      cumpridas: 4,
+      completo: false,
+    });
+    itens['cad7|F|-'] = limpo();
+    expect(statusCheckpoint(def2, itens).completo).toBe(true);
   });
 });

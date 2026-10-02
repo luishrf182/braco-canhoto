@@ -16,7 +16,7 @@ Repositório: https://github.com/luishrf182/braco-canhoto
 | F4 — Módulo 1: Tétrades | concluída |
 | F5 — Agenda + Sessão do dia | concluída |
 | F6 — Sincronização via Gist | concluída |
-| F7 — Base + Módulo 2: Campo harmônico | pendente |
+| F7 — Base + Módulo 2: Campo harmônico | concluída |
 | F8 — Aquecimentos | pendente |
 | F9 — Módulo 3: Arpejos | pendente |
 | F10 — Diagnóstico + acabamento + entrega | pendente |
@@ -163,3 +163,25 @@ Repositório: https://github.com/luishrf182/braco-canhoto
 
 **Pendências**
 - Nenhuma.
+
+## F7 — Base sintetizada + Módulo 2: Campo harmônico
+
+**Feito**
+- `teoria/campo.ts`: campo maior em tríades e tétrades por empilhamento de terças (sem tabela escrita à mão), rótulos de grau (I7M…VIIm7(b5)), funções T/S/D, `cadencia(tom, graus)` com inversão "/3" e dominante secundária "V7/X", relativas. Testado nos 12 tons.
+- `teoria/voicings.ts`: `voicingNaRegiao` (tétrade nas formas E/A/D mais próxima de uma casa), para progressões sem saltos.
+- `audio/levadas.ts` (dados puros, testados): balada, pop, groove e rock em grade de 16 passos. `audio/motor.ts` → `iniciarBase`: bateria sintetizada, baixo, pad, clique e contagem num único relógio; `aoTocar(i)` no início de cada acorde.
+- Formato `progressao` no player: cifras com o acorde atual destacado, voicing do acorde atual no braço, seletor de levada e pad (reinicia a base se mudar durante a execução).
+- Módulo 2: 2 lições (empilhamento; funções e relativa), cartas "graus relâmpago" e de relativas, campo inteiro em tétrades, as 8 cadências do blueprint, cada uma com uma levada. Checkpoint: campo em 4 tons + 4 cadências Limpo.
+- Módulo 1: pendência da F4 resolvida, com o exercício "IIm7 – V7 – I7M em duas regiões".
+- Checkpoint generalizado em requisitos (permite "4 de 8 cadências").
+- Lições mostram campo/cadência com chips de acorde clicáveis.
+- `e2e/audio.mjs`: a base toca, o acorde destacado avança, trocar a levada durante a execução não gera erro.
+- `revisor-teoria`: aprovado; as 4 notas foram aplicadas.
+
+**Decisões autônomas**
+- Tríade diminuta = `Bm(b5)` (sugestão do revisor). O "°" fica reservado para a tétrade diminuta.
+- Em inversões (G7/B), a guitarra mostra o voicing em posição fundamental; só o baixo sintetizado toca a 3ª.
+- Bateria, baixo e pad 100% sintetizados (sem amostras), coerente com a CSP e sem arquivos de áudio no repositório.
+
+**Pendências**
+- A sincronia da bateria e o timbre precisam de escuta no celular (vai para o roteiro de `ENTREGA.md`).

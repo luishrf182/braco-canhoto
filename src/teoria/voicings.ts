@@ -251,3 +251,24 @@ export function janelaDoVoicing(v: Voicing, tamanho = 5): [number, number] {
   if (min === 0) return [0, Math.max(tamanho - 1, max)];
   return [min, Math.max(min + tamanho - 1, max)];
 }
+
+/**
+ * Voicing de tétrade (formas de E, A ou D, nas duas regiões do braço) mais próximo de uma casa:
+ * usado para tocar progressões sem saltar pelo braço.
+ */
+export function voicingNaRegiao(fundamental: ClasseNota, q: Qualidade, centro: number): Voicing {
+  const candidatos: Voicing[] = [];
+  for (const { forma } of FORMAS_TETRADE) {
+    for (const casaMin of [0, 5, 10]) {
+      try {
+        candidatos.push(voicing(fundamental, q, forma, { casaMin }));
+      } catch {
+        // forma não cabe nesta região
+      }
+    }
+  }
+  const dist = (v: Voicing) => Math.abs((v.faixa[0] + v.faixa[1]) / 2 - centro);
+  // Desempate: prefere a forma com tônica mais grave (E, depois A, depois D).
+  const ordem: Record<FormaCaged, number> = { E: 0, A: 1, D: 2, C: 3, G: 4 };
+  return candidatos.sort((a, b) => dist(a) - dist(b) || ordem[a.forma] - ordem[b.forma])[0]!;
+}

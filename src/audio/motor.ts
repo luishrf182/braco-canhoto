@@ -1,6 +1,7 @@
 // Motor de áudio. Tone.js é carregado sob demanda no primeiro gesto do usuário (ADR-4).
 import type * as ToneNS from 'tone';
 import { registrarErro } from '../progresso/erros';
+import { LEVADAS, toques, type NomeLevada } from './levadas';
 
 type Tone = typeof ToneNS;
 
@@ -130,7 +131,7 @@ export function parar(): void {
   transporte.loop = false;
   agendados = [];
   violao?.releaseAll();
-  pararBaseInterna?.();
+  kit?.pad.releaseAll();
   if (estado === 'tocando') mudarEstado('pronto');
   emitirToque(-1);
 }
@@ -242,12 +243,6 @@ export function metronomo(bpm: number, tempos = 4): void {
   transporte.start('+0.05');
 }
 
-/** Gancho para a base (F7) se limpar junto com `parar()`. */
-let pararBaseInterna: (() => void) | null = null;
-export function registrarParadaBase(fn: (() => void) | null) {
-  pararBaseInterna = fn;
-}
-
 export function aoTocar(cb: (indice: number) => void): () => void {
   ouvintesToque.add(cb);
   return () => ouvintesToque.delete(cb);
@@ -261,4 +256,143 @@ export function aoMudarEstado(cb: (e: EstadoAudio) => void): () => void {
 /** Acesso ao Tone já carregado (para levadas/sintetizadores da base). */
 export function toneCarregado(): Tone | null {
   return tone;
+}
+
+// ---------------------------------------------------------------- Base (F7)
+
+export interface AcordeBase {
+  /** Notas do pad (região média). */
+  midi: number[];
+  /** Nota do baixo (fundamental ou inversão). */
+  baixo: number;
+}
+
+export interface OpcoesBase {
+  acordes: AcordeBase[];
+  batidasPorAcorde: number;
+  levada: NomeLevada | 'nenhuma';
+  bpm: number;
+  pad: boolean;
+  clique: boolean;
+  contagem?: boolean;
+}
+
+interface Kit {
+  bumbo: ToneNS.MembraneSynth;
+  caixa: ToneNS.NoiseSynth;
+  chimbal: ToneNS.NoiseSynth;
+  baixo: ToneNS.MonoSynth;
+  pad: ToneNS.PolySynth;
+}
+
+let kit: Kit | null = null;
+
+function criarKit(T: Tone): Kit {
+  const bumbo = new T.MembraneSynth({
+    pitchDecay: 0.04,
+    octaves: 6,
+    envelope: { attack: 0.001, decay: 0.35, sustain: 0, release: 0.1 },
+    volume: -6,
+  }).toDestination();
+  const filtroCaixa = new T.Filter({ frequency: 1800, type: 'highpass' }).toDestination();
+  const caixa = new T.NoiseSynth({
+    noise: { type: 'white' },
+    envelope: { attack: 0.001, decay: 0.16, sustain: 0, release: 0.05 },
+    volume: -14,
+  }).connect(filtroCaixa);
+  const filtroChimbal = new T.Filter({ frequency: 8000, type: 'highpass' }).toDestination();
+  const chimbal = new T.NoiseSynth({
+    noise: { type: 'white' },
+    envelope: { attack: 0.001, decay: 0.04, sustain: 0, release: 0.02 },
+    volume: -22,
+  }).connect(filtroChimbal);
+  const baixo = new T.MonoSynth({
+    oscillator: { type: 'triangle' },
+    filter: { Q: 1, type: 'lowpass', rolloff: -24 },
+    filterEnvelope: { attack: 0.01, decay: 0.2, sustain: 0.4, baseFrequency: 180, octaves: 2 },
+    envelope: { attack: 0.01, decay: 0.3, sustain: 0.6, release: 0.2 },
+    volume: -8,
+  }).toDestination();
+  const filtroPad = new T.Filter({ frequency: 1400, type: 'lowpass' }).toDestination();
+  const pad = new T.PolySynth(T.Synth, {
+    oscillator: { type: 'fattriangle', count: 3, spread: 18 },
+    envelope: { attack: 0.25, decay: 0.4, sustain: 0.7, release: 0.8 },
+    volume: -20,
+  }).connect(filtroPad);
+  pad.maxPolyphony = 12;
+  return { bumbo, caixa, chimbal, baixo, pad };
+}
+
+/**
+ * Base em loop: bateria (levada), baixo, pad e clique. `aoTocar(i)` dispara no início do acorde i.
+ * Durante a contagem, `aoTocar` recebe −2, −3... como em `tocarSequencia`.
+ */
+export function iniciarBase(o: OpcoesBase): void {
+  if (!tone || !clique || !o.acordes.length) return;
+  const T = tone;
+  parar();
+  kit ??= criarKit(T);
+  const k = kit;
+  const transporte = T.getTransport();
+  const desenho = T.getDraw();
+  transporte.bpm.value = o.bpm;
+  transporte.position = 0;
+  const lev = o.levada === 'nenhuma' ? null : LEVADAS[o.levada];
+  const linhas = lev
+    ? {
+        bumbo: toques(lev.bumbo),
+        caixa: toques(lev.caixa),
+        chimbal: toques(lev.chimbal),
+        baixo: toques(lev.baixo),
+      }
+    : null;
+  const passosPorAcorde = Math.max(1, Math.round(o.batidasPorAcorde * 4));
+  const passosContagem = o.contagem ? 16 : 0;
+  const durAcorde = `${Math.round(o.batidasPorAcorde * transporte.PPQ)}i`;
+  let s = 0;
+
+  agendados.push(
+    transporte.scheduleRepeat((time) => {
+      const passo = s++;
+      if (passo < passosContagem) {
+        if (passo % 4 === 0) {
+          clique!.triggerAttackRelease(passo === 0 ? 1760 : 1320, 0.03, time);
+          desenho.schedule(() => emitirToque(-2 - passo / 4), time);
+        }
+        return;
+      }
+      const p = passo - passosContagem;
+      const noCompasso = p % 16;
+      const idx = Math.floor(p / passosPorAcorde) % o.acordes.length;
+      const ac = o.acordes[idx]!;
+      if (p % passosPorAcorde === 0) {
+        desenho.schedule(() => emitirToque(idx), time);
+        if (o.pad)
+          k.pad.triggerAttackRelease(
+            ac.midi.map((m) => freq(T, m)),
+            durAcorde,
+            time,
+            0.8,
+          );
+      }
+      if (linhas) {
+        const em = (l: { passo: number; forca: number }[]) => l.find((t) => t.passo === noCompasso);
+        const b = em(linhas.bumbo);
+        if (b) k.bumbo.triggerAttackRelease('C1', '8n', time, b.forca);
+        const c = em(linhas.caixa);
+        if (c) k.caixa.triggerAttackRelease('16n', time, c.forca);
+        const h = em(linhas.chimbal);
+        if (h) k.chimbal.triggerAttackRelease('32n', time, h.forca);
+        const bx = em(linhas.baixo);
+        if (bx) k.baixo.triggerAttackRelease(freq(T, ac.baixo), '8n', time, bx.forca);
+      } else if (p % passosPorAcorde === 0) {
+        k.baixo.triggerAttackRelease(freq(T, ac.baixo), durAcorde, time, 0.8);
+      }
+      if (o.clique && p % 4 === 0) {
+        clique!.triggerAttackRelease(noCompasso === 0 ? 1760 : 1320, 0.03, time);
+      }
+    }, '16n'),
+  );
+  mudarEstado('tocando');
+  transporte.start('+0.05');
 }

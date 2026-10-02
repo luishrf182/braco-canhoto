@@ -1,6 +1,13 @@
 import { criarAleatorio } from './aleatorio';
 import { oitavas, quizNomePonto, quizTocarNota, todasAsNotas } from './mapa';
 import { identificarTetrade, ondeEstaGrau, verTetrade } from './tetrades';
+import {
+  identificarGrauCampo,
+  progressaoCadencia,
+  progressaoRegioes,
+  relativas,
+  tocarCampo,
+} from './campo';
 import type { ContextoGeracao, ExercicioConcreto, FormaCaged, ModeloExercicio } from './tipos';
 import type { ClasseNota } from '../teoria/notas';
 
@@ -14,6 +21,11 @@ const GERADORES: Record<string, Gerador> = {
   verTetrade,
   identificarTetrade,
   ondeEstaGrau,
+  progressaoCadencia,
+  progressaoRegioes,
+  tocarCampo,
+  identificarGrauCampo,
+  relativas,
 };
 
 /** Outros módulos de exercícios registram seus geradores aqui. */
