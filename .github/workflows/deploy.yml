@@ -2,7 +2,7 @@ name: QA e deploy
 
 on:
   push:
-    branches: [main]
+    branches: ['**']
   pull_request:
   workflow_dispatch:
 
