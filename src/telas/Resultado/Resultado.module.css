@@ -1,0 +1,79 @@
+.tela {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  max-width: 720px;
+  margin: 0 auto;
+  padding: var(--space-4) var(--space-3) var(--space-5);
+}
+
+.placar {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-2);
+}
+
+.numero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--space-3);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.numero :global(.num) {
+  font-size: 44px;
+  font-weight: 600;
+  line-height: 1.1;
+}
+
+.numero[data-avaliacao='limpo'] :global(.num) {
+  color: var(--ok);
+}
+
+.numero[data-avaliacao='travou'] :global(.num) {
+  color: var(--err);
+}
+
+.lista {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.lista li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-2);
+}
+
+.avaliacao {
+  flex: none;
+  width: 56px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.avaliacao[data-avaliacao='limpo'] {
+  color: var(--ok);
+}
+
+.avaliacao[data-avaliacao='travou'] {
+  color: var(--err);
+}
+
+.titulo {
+  flex: 1;
+  min-width: 160px;
+}
+
+.voltar {
+  align-self: flex-start;
+  min-height: 52px;
+}

@@ -16,7 +16,7 @@ Deploy: GitHub Actions → GitHub Pages. Sem servidor, sem banco. Progresso em G
 - npm run qa         # lint + typecheck + test + build (rode antes de todo commit)
 
 ## Ambiente (Windows)
-- A pasta está no Google Drive (escolha do usuário). Se o npm travar por bloqueio de arquivo, tente de novo.
+- Projeto em C:/projetos/braco-canhoto (o Google Drive não aceita npm install). Na pasta do Drive só há um LEIAME apontando para cá.
 - `gh` fica em "C:\Program Files\GitHub CLI\gh.exe" e pode não estar no PATH do shell.
 
 ## Arquitetura (regras duras)

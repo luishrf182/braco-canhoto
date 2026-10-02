@@ -53,6 +53,8 @@ export interface Progresso {
   itens: Record<string, ItemProgresso>;
   /** Últimas 60. */
   sessoes: ResumoSessao[];
+  /** Lições concluídas: "modulo/licao" → data ISO. */
+  licoesVistas?: Record<string, string>;
 }
 
 export const EPOCA = '1970-01-01T00:00:00.000Z';

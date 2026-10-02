@@ -1,0 +1,71 @@
+.tela {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  max-width: 720px;
+  padding-bottom: var(--space-5);
+}
+
+.cabecalho p::first-letter {
+  text-transform: uppercase;
+}
+
+.destaque {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.linhaTitulo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.duracoes {
+  display: flex;
+  gap: var(--space-1);
+}
+
+.duracoes :global(.btn) {
+  padding: 0 var(--space-2);
+  font-size: 15px;
+}
+
+.plano {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.plano li {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  font-size: 16px;
+}
+
+.motivo {
+  flex: none;
+  width: 96px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}
+
+.motivo[data-motivo='novo'] {
+  color: var(--accent-text);
+}
+
+.comecar {
+  min-height: 56px;
+  min-width: 160px;
+  font-size: 18px;
+}

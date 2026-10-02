@@ -31,6 +31,7 @@ export function normalizar(dado: unknown): Progresso {
     modulos: { ...base.modulos, ...(p.modulos ?? {}) },
     itens: { ...(p.itens ?? {}) },
     sessoes: Array.isArray(p.sessoes) ? p.sessoes.slice(-60) : [],
+    licoesVistas: { ...(p.licoesVistas ?? {}) },
   };
 }
 

@@ -37,7 +37,9 @@ export function PlayerExercicio({
   const [instrucaoQuiz, setInstrucaoQuiz] = useState<string | null>(null);
   const [resultadoQuiz, setResultadoQuiz] = useState<ResultadoQuiz | null>(null);
 
-  const instrucao = formatarTexto(instrucaoQuiz ?? exercicio.instrucao, ajustes.nomesNotas);
+  const instrucao = resultadoQuiz
+    ? 'Pronto. Como foi?'
+    : formatarTexto(instrucaoQuiz ?? exercicio.instrucao, ajustes.nomesNotas);
   const ehQuiz = exercicio.formato === 'quiz-braco' || exercicio.formato === 'identificacao';
   const podeAvaliar = !ehQuiz || resultadoQuiz !== null;
 

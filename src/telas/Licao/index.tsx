@@ -9,13 +9,36 @@ import { formatarTexto } from '../../teoria/notas';
 import { exemploMusical } from './exemplo';
 import css from './Licao.module.css';
 
+/** Lição avulsa (rota /licao/:modulo/:licao). */
 export function Licao() {
   const params = useParams<{ modulo: string; licao: string }>();
   const [, navegar] = useLocation();
-  const { ajustes } = useProgresso();
+  const voltar = () => navegar('/trilha');
+  return (
+    <LicaoConteudo
+      moduloId={params.modulo}
+      licaoId={params.licao}
+      aoConcluir={voltar}
+      aoSair={voltar}
+    />
+  );
+}
+
+interface PropsLicao {
+  moduloId: string;
+  licaoId: string;
+  aoConcluir: () => void;
+  aoSair: () => void;
+  /** "3 de 8" quando dentro da Sessão do dia. */
+  posicao?: string;
+}
+
+/** Telas de conceito de uma lição; marca a lição como vista ao concluir. */
+export function LicaoConteudo({ moduloId, licaoId, aoConcluir, aoSair, posicao }: PropsLicao) {
+  const { ajustes, atualizar } = useProgresso();
   const tocandoAgora = useTocandoAgora();
-  const modulo = buscarModulo(params.modulo);
-  const licao = buscarLicao(params.modulo, params.licao);
+  const modulo = buscarModulo(moduloId);
+  const licao = buscarLicao(moduloId, licaoId);
   const [pagina, setPagina] = useState(0);
   const [rotulo, setRotulo] = useState<'grau' | 'nota'>('grau');
 
@@ -26,8 +49,8 @@ export function Licao() {
     return (
       <main className={css.tela}>
         <h1>Lição não encontrada</h1>
-        <button className="btn" onClick={() => navegar('/trilha')}>
-          Voltar à trilha
+        <button className="btn" onClick={aoSair}>
+          Voltar
         </button>
       </main>
     );
@@ -40,7 +63,18 @@ export function Licao() {
   };
   const sair = () => {
     audio.parar();
-    navegar('/trilha');
+    aoSair();
+  };
+  const concluir = () => {
+    audio.parar();
+    atualizar((p) => ({
+      ...p,
+      licoesVistas: {
+        ...(p.licoesVistas ?? {}),
+        [`${moduloId}/${licaoId}`]: new Date().toISOString(),
+      },
+    }));
+    aoConcluir();
   };
   const ouvir = async () => {
     if (!dados) return;
@@ -60,6 +94,7 @@ export function Licao() {
           {modulo.titulo} · {licao.titulo}
         </span>
         <span className="rotulo num">
+          {posicao ? `${posicao} · ` : ''}
           {pagina + 1}/{licao.telas.length}
         </span>
       </header>
@@ -117,7 +152,10 @@ export function Licao() {
             </button>
           </div>
         )}
-        <button className="btn btn-primario" onClick={() => (ultima ? sair() : irPara(pagina + 1))}>
+        <button
+          className="btn btn-primario"
+          onClick={() => (ultima ? concluir() : irPara(pagina + 1))}
+        >
           {ultima ? 'Concluir' : 'Próxima'}
         </button>
       </footer>

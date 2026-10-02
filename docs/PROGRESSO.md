@@ -14,7 +14,7 @@ Repositório: https://github.com/luishrf182/braco-canhoto
 | F2 — Áudio base | concluída |
 | F3 — Player + Mapa do braço | concluída |
 | F4 — Módulo 1: Tétrades | concluída |
-| F5 — Agenda + Sessão do dia | pendente |
+| F5 — Agenda + Sessão do dia | concluída |
 | F6 — Sincronização via Gist | pendente |
 | F7 — Base + Módulo 2: Campo harmônico | pendente |
 | F8 — Aquecimentos | pendente |
@@ -127,3 +127,22 @@ Repositório: https://github.com/luishrf182/braco-canhoto
 
 **Pendências**
 - Exercício de progressão do Módulo 1 → F7.
+
+## F5 — Agenda + Sessão do dia
+
+**Feito**
+- `agenda/sessao.ts` (puro): orçamento 20% aquecimento / 40% novos / 40% revisão (20 min = 4 + 8 + 8; escala para 10 e 30), revisões vencidas por data e caixa, revisão intercalada (sem o mesmo modelo seguido), conteúdo novo do primeiro módulo com checkpoint pendente: 1 lição não vista por sessão → combinações modelo × forma nunca feitas (sempre em C) → variantes de tom sorteadas (peso maior para C, G, D, A, E, F, B♭) só depois do primeiro Limpo. Sem conteúdo novo, a revisão ocupa o tempo todo. Sessão determinística por dia (semente da data).
+- `agenda/checkpoint.ts`: status do checkpoint por modelo × forma × tons com Limpo.
+- Telas: **Hoje** (plano do dia com motivo de cada item, 10/20/30 min, "Outra combinação", "Continuar" se houver sessão em andamento, aviso do primeiro dia), **Sessão** (executa lições e exercícios em sequência, "3 de 9" no topo, andamento salvo no aparelho), **Resultado** (Limpo/Quase/Travou, o que subiu de caixa, BPM e próxima revisão de cada item).
+- Lições concluídas ficam registradas (`Progresso.licoesVistas`).
+- Testes da agenda com datas simuladas (Limpo some por 3 dias, Quase volta amanhã, Travou volta hoje) + `e2e/fluxos.mjs` com uma sessão completa de 20 min até o Resultado.
+
+**Decisões autônomas**
+- Uma lição nova por sessão (o primeiro rascunho colocava as 4 lições do módulo no mesmo dia).
+- Aquecimento da F5 = quizzes do Mapa do braço; a F8 acrescenta os aquecimentos técnicos.
+- Quizzes e cartas não alteram BPM (gravam só a caixa); `ver-tocar` grava BPM.
+- `Progresso` ganhou o campo opcional `licoesVistas`.
+- `CLAUDE.md`: o plugin context-mode acrescenta regras próprias no arquivo local; essas linhas ficam fora do repositório.
+
+**Pendências**
+- Estados "Salvando…" e "Salvo só neste aparelho" do Resultado chegam com a sincronização (F6).

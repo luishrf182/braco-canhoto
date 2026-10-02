@@ -22,6 +22,11 @@ export const TREINOS: Treino[] = [
   },
 ];
 
+/** Aquecimentos da Sessão do dia (a F8 acrescenta os aquecimentos técnicos). */
+export const AQUECIMENTOS: ModeloExercicio[] = MAPA_DO_BRACO.filter(
+  (m) => m.id !== 'mapa-todas-notas',
+);
+
 export function todosModelos(): ModeloExercicio[] {
   return [...MODULOS.flatMap((m) => m.modelos), ...TREINOS.flatMap((t) => t.modelos)];
 }

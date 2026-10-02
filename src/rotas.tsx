@@ -8,6 +8,8 @@ import { Calibracao } from './telas/Calibracao';
 import { Explorar } from './telas/Explorar';
 import { Exercicio } from './telas/Exercicio';
 import { Licao } from './telas/Licao';
+import { Resultado } from './telas/Resultado';
+import { Sessao } from './telas/Sessao';
 import { Trilha } from './telas/Trilha';
 
 function ExigeCalibracao({ children }: { children: ReactNode }) {
@@ -29,6 +31,12 @@ export function Rotas() {
         </Route>
         <Route path="/licao/:modulo/:licao">
           <Licao />
+        </Route>
+        <Route path="/sessao">
+          <Sessao />
+        </Route>
+        <Route path="/resultado">
+          <Resultado />
         </Route>
         <Route path="/hoje">
           <Moldura>

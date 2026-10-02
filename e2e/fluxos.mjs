@@ -32,6 +32,8 @@ async function novaPagina(nav, ajustes = {}, viewport = { width: 1280, height: 7
       );
   }, ajustes);
   const p = await ctx.newPage();
+  globalThis.ultimaPagina = p;
+  globalThis.ultimaPagina = p;
   p.erros = [];
   p.on('pageerror', (e) => p.erros.push(String(e)));
   return p;
@@ -166,6 +168,58 @@ teste('F4: checkpoint completo aparece na trilha', async (nav) => {
   await p.waitForSelector('text=Checkpoint concluído');
 });
 
+// ---------------------------------------------------------------- F5
+teste('F5: sessão de 20 min do começo ao Resultado', async (nav) => {
+  // Modo TV simplifica os quizzes (Revelar → Próxima).
+  const p = await novaPagina(nav, { penseERevele: true }, { width: 1280, height: 720 });
+  await p.goto(BASE + '#/hoje');
+  await p.waitForSelector('text=Primeiro dia');
+  const motivos = await p
+    .locator('ol li span[data-motivo]')
+    .evaluateAll((els) => els.map((e) => e.getAttribute('data-motivo')));
+  afirmar(motivos[0] === 'aquecimento', 'sem aquecimento no início');
+  afirmar(motivos.includes('novo'), 'sem conteúdo novo');
+  await p.getByRole('button', { name: 'Começar' }).click();
+  for (let passo = 0; passo < 400; passo++) {
+    if (p.url().includes('/resultado')) break;
+    const botao = async (nome) => {
+      const b = p.getByRole('button', { name: nome, exact: true });
+      if (!(await b.count())) return false;
+      return b
+        .first()
+        .click({ timeout: 800 })
+        .then(
+          () => true,
+          () => false,
+        );
+    };
+    if (await botao('Concluir')) continue;
+    if (await botao('Próxima')) continue;
+    if (await botao('Revelar')) continue;
+    if (await p.getByRole('group', { name: 'Como foi?' }).count()) {
+      await p.keyboard.press('1');
+      await p.waitForTimeout(150);
+      continue;
+    }
+    await p.waitForTimeout(200);
+  }
+  await p.waitForSelector('h1:has-text("Sessão concluída")');
+  await p.screenshot({ path: 'docs/screenshots/F5/resultado-1280x720.png', fullPage: true });
+  const prog = await lerProgresso(p);
+  afirmar(prog.sessoes.length === 1, 'resumo da sessão não gravado');
+  const chaves = Object.keys(prog.itens).filter((k) => k.startsWith('tetrade'));
+  afirmar(chaves.length > 0, 'nenhum item novo do Módulo 1');
+  afirmar(
+    chaves.every((k) => k.split('|')[1] === 'C'),
+    'conteúdo novo fora de C: ' + chaves,
+  );
+  afirmar(Object.keys(prog.licoesVistas ?? {}).length > 0, 'lição não marcada como vista');
+  afirmar(p.erros.length === 0, p.erros.join(' | '));
+  // De volta ao Hoje: a próxima sessão já não começa pela mesma lição.
+  await p.getByRole('link', { name: 'Voltar para Hoje' }).click();
+  await p.waitForSelector('text=Você já fez a sessão de hoje');
+});
+
 // ----------------------------------------------------------------
 try {
   for (let i = 0; i < 60; i++) {
@@ -186,6 +240,8 @@ try {
     } catch (e) {
       falhas++;
       console.log('❌ ' + t.nome + ' — ' + e.message.split('\n')[0]);
+      await globalThis.ultimaPagina?.screenshot({ path: 'test-results/falha.png' }).catch(() => {});
+      console.log('   em ' + globalThis.ultimaPagina?.url());
     }
   }
   await nav.close();
